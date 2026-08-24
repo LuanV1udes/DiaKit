@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/classical-b279fa2f-d3ba-4a58-b26d-b45f5d4977e9/styles.css">
+  <script src="_ds/classical-b279fa2f-d3ba-4a58-b26d-b45f5d4977e9/_ds_bundle.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --font-heading: "Josefin Sans", system-ui, sans-serif;
+      --font-body: "Josefin Sans", system-ui, sans-serif;
+      --color-accent: #8c4a48; --color-accent-700: #582f2d; --color-accent-100: #f7ece9;
+      --color-accent-2: #a9784f; --color-accent-2-700: #6b4830; --color-accent-2-100: #f7efe6;
+    }
+    body{margin:0;background:var(--color-neutral-100);}
+    .kicker{font:600 11px var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-500)}
+    .card{background:var(--color-bg);border:1px solid var(--color-divider);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+  </style>
+</helmet>
+
+<div style="display:flex;flex-wrap:wrap;gap:40px;padding:64px;box-sizing:border-box;font-family:var(--font-body)">
+
+  <div>
+    <div class="kicker" style="margin-bottom:12px">Marca — lockup principal</div>
+    <div class="card" style="width:420px;height:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:16px">
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <rect x="14" y="6" width="28" height="36" rx="3" stroke="#8c4a48" stroke-width="2.5"/>
+        <path d="M32 6v9h9" stroke="#8c4a48" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M20 30l5 5 11-13" stroke="#a9784f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div style="font:600 40px var(--font-heading);color:var(--color-text);letter-spacing:-.01em">DiaKit</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="kicker" style="margin-bottom:12px">Marca — sobre marsala</div>
+    <div style="width:420px;height:220px;border-radius:var(--radius-lg);background:#582f2d;display:flex;flex-direction:row;align-items:center;justify-content:center;gap:16px">
+      <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <rect x="14" y="6" width="28" height="36" rx="3" stroke="#f7ece9" stroke-width="2.5"/>
+        <path d="M32 6v9h9" stroke="#f7ece9" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M20 30l5 5 11-13" stroke="#ddc19a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div style="font:600 40px var(--font-heading);color:#f7ece9;letter-spacing:-.01em">DiaKit</div>
+    </div>
+  </div>
+
+  <div>
+    <div class="kicker" style="margin-bottom:12px">Somente o símbolo</div>
+    <div class="card" style="width:200px;height:220px;display:flex;align-items:center;justify-content:center">
+      <svg width="88" height="88" viewBox="0 0 56 56" fill="none">
+        <rect x="14" y="6" width="28" height="36" rx="3" stroke="#8c4a48" stroke-width="2.5"/>
+        <path d="M32 6v9h9" stroke="#8c4a48" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M20 30l5 5 11-13" stroke="#a9784f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <div>
+    <div class="kicker" style="margin-bottom:12px">Ícone de app (fundo sólido)</div>
+    <div style="width:200px;height:220px;display:flex;align-items:center;justify-content:center">
+      <div style="width:120px;height:120px;border-radius:28px;background:#8c4a48;display:flex;align-items:center;justify-content:center">
+        <svg width="60" height="60" viewBox="0 0 56 56" fill="none">
+          <rect x="14" y="6" width="28" height="36" rx="3" stroke="#f7ece9" stroke-width="2.5"/>
+          <path d="M32 6v9h9" stroke="#f7ece9" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M20 30l5 5 11-13" stroke="#f7efe6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="kicker" style="margin-bottom:12px">Wordmark isolado</div>
+    <div class="card" style="width:420px;height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
+      <div style="font:600 44px var(--font-heading);color:var(--color-text);letter-spacing:-.01em">DiaKit</div>
+      <div style="font:400 12px var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--color-neutral-500)">Ferramentas do dia a dia</div>
+    </div>
+  </div>
+
+</div>
+
+</x-dc>
+</body>
+</html>

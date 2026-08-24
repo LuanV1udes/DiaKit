@@ -1,0 +1,16 @@
+{
+  "name": "diakit-backend",
+  "version": "0.1.0",
+  "description": "Servico local do DiaKit: conversao e edicao de PDF",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "fetch-libreoffice": "powershell -ExecutionPolicy Bypass -File scripts/fetch-libreoffice.ps1"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "dependencies": {
+    "express": "^4.19.2",
+    "multer": "^2.0.0"
+  }
+}

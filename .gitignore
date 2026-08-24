@@ -1,0 +1,12 @@
+node_modules/
+tmp/
+*.log
+
+# LibreOffice embutido no pacote -- gerado por backend/scripts/fetch-libreoffice.ps1
+# (~1,5GB, nunca commitar)
+backend/vendor/
+
+# Flutter
+app/build/
+app/.dart_tool/
+app/.flutter-plugin-dependencies

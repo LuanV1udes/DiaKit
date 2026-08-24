@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/classical-b279fa2f-d3ba-4a58-b26d-b45f5d4977e9/styles.css">
+  <script src="_ds/classical-b279fa2f-d3ba-4a58-b26d-b45f5d4977e9/_ds_bundle.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --font-heading: "Josefin Sans", system-ui, sans-serif;
+      --font-body: "Josefin Sans", system-ui, sans-serif;
+      --color-accent: #8c4a48; --color-accent-100: #f7ece9; --color-accent-200: #eed3ce; --color-accent-300: #dcaea4;
+      --color-accent-400: #c17f72; --color-accent-500: #8c4a48; --color-accent-600: #703c3a; --color-accent-700: #582f2d;
+      --color-accent-800: #3f2221; --color-accent-900: #281514;
+      --color-accent-2: #a9784f; --color-accent-2-100: #f7efe6; --color-accent-2-200: #ecdcc4; --color-accent-2-300: #ddc19a;
+      --color-accent-2-400: #c39c68; --color-accent-2-500: #a9784f; --color-accent-2-600: #8a5f3d; --color-accent-2-700: #6b4830;
+      --color-accent-2-800: #4d3323; --color-accent-2-900: #2f1f16;
+    }
+    body{margin:0;background:var(--color-neutral-100);}
+    a{color:var(--color-accent);} a:hover{color:var(--color-accent-700);}
+    .gallery::-webkit-scrollbar{height:10px}
+    .gallery::-webkit-scrollbar-thumb{background:var(--color-divider);border-radius:8px}
+    .screen{width:390px;height:844px;flex:none;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:20px;box-shadow:var(--shadow-lg);overflow:hidden;position:relative;display:flex;flex-direction:column}
+    .navbar{display:flex;align-items:center;justify-content:space-around;height:64px;border-top:1px solid var(--color-divider);background:var(--color-bg);flex:none}
+    .navitem{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--color-neutral-500);font-family:var(--font-body)}
+    .navitem.active{color:var(--color-accent-700)}
+    .row{display:flex;align-items:center;gap:var(--space-3)}
+    .kicker{font:600 11px var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-500)}
+    .dscreen{width:1440px;height:900px;flex:none;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:10px;box-shadow:var(--shadow-lg);overflow:hidden;position:relative;display:flex}
+    .sidebar{width:232px;flex:none;border-right:1px solid var(--color-divider);display:flex;flex-direction:column;padding:28px 20px;box-sizing:border-box;gap:4px}
+    .sidenav{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:var(--radius-md);font-size:14px;color:var(--color-neutral-700)}
+    .sidenav.active{color:var(--color-accent-700);background:var(--color-accent-100)}
+  </style>
+</helmet>
+
+<div style="padding:64px 64px 0;box-sizing:border-box"><div class="kicker" style="font-size:13px;margin-bottom:16px">Modo claro</div></div>
+<div class="gallery" style="display:flex;gap:56px;padding:0 64px 40px;overflow-x:auto;align-items:flex-start;box-sizing:border-box;font-family:var(--font-body)">
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">01 · Splash / Onboarding</div>
+  <div class="screen">
+    <div style="flex:1;display:flex;flex-direction:column;padding:40px 28px;box-sizing:border-box">
+      <div style="flex:1;display:flex;align-items:center;justify-content:center">
+        <div style="width:100%;aspect-ratio:1/0.9;background:var(--color-surface);border:1px solid var(--color-divider);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;gap:18px;box-shadow:var(--shadow-sm)">
+          <i data-lucide="file-text" style="width:44px;height:44px;color:var(--color-neutral-700)"></i>
+          <i data-lucide="arrow-right" style="width:22px;height:22px;color:var(--color-accent)"></i>
+          <i data-lucide="file-check-2" style="width:44px;height:44px;color:var(--color-accent-700)"></i>
+        </div>
+      </div>
+      <div style="flex:none">
+        <h1 style="font-size:44px;margin:0 0 10px;letter-spacing:-.01em">DiaKit</h1>
+        <p style="font-size:15px;color:var(--color-neutral-700);margin:0 0 28px;line-height:1.6">Ferramentas essenciais para o seu dia a dia, direto do bolso. Comece transformando seus documentos DOC e DOCX em PDF prontos para imprimir.</p>
+        <div style="display:flex;gap:6px;justify-content:center;margin-bottom:24px">
+          <div style="width:20px;height:4px;border-radius:2px;background:var(--color-accent)"></div>
+          <div style="width:8px;height:4px;border-radius:2px;background:var(--color-divider)"></div>
+          <div style="width:8px;height:4px;border-radius:2px;background:var(--color-divider)"></div>
+        </div>
+        <button class="btn btn-primary btn-block" style="height:48px;font-size:15px">Começar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">02 · Home</div>
+  <div class="screen">
+    <div style="flex:1;overflow:auto;padding:24px 24px 12px;box-sizing:border-box">
+      <div class="row" style="justify-content:space-between;margin-bottom:28px">
+        <div>
+          <div class="kicker">Olá</div>
+          <h2 style="font-size:26px;margin:2px 0 0">O que vamos fazer hoje?</h2>
+        </div>
+        <div class="btn btn-icon btn-secondary" style="border-radius:999px"><i data-lucide="user" style="width:18px;height:18px"></i></div>
+      </div>
+
+      <div style="border:1px solid var(--color-accent);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-sm);margin-bottom:32px">
+        <div class="row" style="justify-content:space-between;margin-bottom:14px">
+          <div style="width:44px;height:44px;border-radius:var(--radius-md);background:var(--color-accent-100);display:flex;align-items:center;justify-content:center">
+            <i data-lucide="file-output" style="width:22px;height:22px;color:var(--color-accent-700)"></i>
+          </div>
+          <i data-lucide="arrow-right" style="width:18px;height:18px;color:var(--color-accent)"></i>
+        </div>
+        <h3 style="font-size:19px;margin:0 0 6px">Converter para PDF</h3>
+        <p style="font-size:13.5px;color:var(--color-neutral-700);margin:0">Transforme arquivos DOC e DOCX em PDF prontos para impressão.</p>
+      </div>
+
+      <div class="kicker" style="margin-bottom:14px">Em breve</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:16px;opacity:.55;position:relative">
+          <i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i>
+          <i data-lucide="file-symlink" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i>
+          <div style="font:600 14px var(--font-heading)">PDF → Word</div>
+        </div>
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:16px;opacity:.55;position:relative">
+          <i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i>
+          <i data-lucide="minimize-2" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i>
+          <div style="font:600 14px var(--font-heading)">Comprimir PDF</div>
+        </div>
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:16px;opacity:.55;position:relative">
+          <i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i>
+          <i data-lucide="signature" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i>
+          <div style="font:600 14px var(--font-heading)">Assinar PDF</div>
+        </div>
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:16px;opacity:.55;position:relative">
+          <i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i>
+          <i data-lucide="image" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i>
+          <div style="font:600 14px var(--font-heading)">PDF → Imagem</div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar">
+      <div class="navitem active"><i data-lucide="house" style="width:20px;height:20px"></i>Início</div>
+      <div class="navitem"><i data-lucide="history" style="width:20px;height:20px"></i>Histórico</div>
+      <div class="navitem"><i data-lucide="user" style="width:20px;height:20px"></i>Perfil</div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">03 · Converter — arquivo selecionado</div>
+  <div class="screen">
+    <div style="flex:1;overflow:auto;padding:20px 24px;box-sizing:border-box">
+      <div class="row" style="margin-bottom:24px;gap:14px">
+        <i data-lucide="arrow-left" style="width:20px;height:20px"></i>
+        <h2 style="font-size:20px;margin:0">Converter para PDF</h2>
+      </div>
+
+      <div style="border:1.5px dashed var(--color-divider);border-radius:var(--radius-lg);padding:36px 20px;text-align:center;margin-bottom:20px">
+        <i data-lucide="upload-cloud" style="width:32px;height:32px;color:var(--color-accent);margin-bottom:12px"></i>
+        <div style="font:600 15px var(--font-heading);margin-bottom:4px">Toque para selecionar um arquivo</div>
+        <div style="font-size:12.5px;color:var(--color-neutral-500)">DOC ou DOCX, até 25MB</div>
+      </div>
+
+      <div class="kicker" style="margin-bottom:10px">Arquivo selecionado</div>
+      <div class="row" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:14px;justify-content:space-between;margin-bottom:28px">
+        <div class="row" style="gap:12px">
+          <i data-lucide="file-text" style="width:26px;height:26px;color:var(--color-accent-700)"></i>
+          <div>
+            <div style="font-size:13.5px;font-weight:600">Relatório_Trimestral.docx</div>
+            <div style="font-size:12px;color:var(--color-neutral-500)">1,4 MB</div>
+          </div>
+        </div>
+        <i data-lucide="x" style="width:16px;height:16px;color:var(--color-neutral-500)"></i>
+      </div>
+
+      <div class="hr" style="margin:0 0 20px"></div>
+      <div style="font-size:12.5px;color:var(--color-neutral-500);line-height:1.6">O arquivo é convertido no seu aparelho. Nada é enviado a servidores externos.</div>
+    </div>
+    <div style="padding:20px 24px 28px;box-sizing:border-box;border-top:1px solid var(--color-divider)">
+      <button class="btn btn-primary btn-block" style="height:48px;font-size:15px">Converter para PDF</button>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">04 · Resultado / Download</div>
+  <div class="screen">
+    <div style="flex:1;display:flex;flex-direction:column;padding:32px 28px;box-sizing:border-box">
+      <div class="row" style="margin-bottom:32px;gap:14px">
+        <i data-lucide="arrow-left" style="width:20px;height:20px"></i>
+        <h2 style="font-size:20px;margin:0">Conversão concluída</h2>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+        <div style="width:84px;height:84px;border-radius:999px;border:1.5px solid var(--color-accent);display:flex;align-items:center;justify-content:center;margin-bottom:24px">
+          <i data-lucide="check" style="width:36px;height:36px;color:var(--color-accent-700)"></i>
+        </div>
+        <h3 style="font-size:21px;margin:0 0 8px">Seu arquivo está pronto!</h3>
+        <p style="font-size:13.5px;color:var(--color-neutral-700);margin:0 0 28px">Pronto para imprimir ou compartilhar.</p>
+        <div class="row" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:14px 18px;gap:12px;width:100%;box-sizing:border-box;justify-content:flex-start">
+          <i data-lucide="file-check-2" style="width:26px;height:26px;color:var(--color-accent-700)"></i>
+          <div style="text-align:left">
+            <div style="font-size:13.5px;font-weight:600">Relatório_Trimestral.pdf</div>
+            <div style="font-size:12px;color:var(--color-neutral-500)">1,2 MB</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button class="btn btn-primary btn-block" style="height:48px;font-size:15px"><i data-lucide="download" style="width:16px;height:16px"></i>Baixar PDF</button>
+        <button class="btn btn-secondary btn-block" style="height:44px;font-size:14px;margin-top:0"><i data-lucide="share-2" style="width:15px;height:15px"></i>Compartilhar</button>
+        <button class="btn btn-ghost" style="align-self:center;margin-top:4px">Converter outro arquivo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">05 · Histórico</div>
+  <div class="screen">
+    <div style="flex:1;overflow:auto;padding:24px 24px 12px;box-sizing:border-box">
+      <h2 style="font-size:24px;margin:0 0 24px">Histórico</h2>
+
+      <div class="kicker" style="margin-bottom:10px">Hoje</div>
+      <div style="display:flex;flex-direction:column;margin-bottom:24px">
+        <div class="row" style="justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--color-divider)">
+          <div class="row" style="gap:12px"><i data-lucide="file-check-2" style="width:20px;height:20px;color:var(--color-accent-700)"></i>
+            <div><div style="font-size:13.5px;font-weight:600">Relatório_Trimestral.pdf</div><div style="font-size:11.5px;color:var(--color-neutral-500)">14:32 · 1,2 MB</div></div>
+          </div>
+          <span class="tag tag-accent">Concluído</span>
+        </div>
+        <div class="row" style="justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--color-divider)">
+          <div class="row" style="gap:12px"><i data-lucide="file-check-2" style="width:20px;height:20px;color:var(--color-accent-700)"></i>
+            <div><div style="font-size:13.5px;font-weight:600">Contrato_Aluguel.pdf</div><div style="font-size:11.5px;color:var(--color-neutral-500)">09:07 · 640 KB</div></div>
+          </div>
+          <span class="tag tag-accent">Concluído</span>
+        </div>
+      </div>
+
+      <div class="kicker" style="margin-bottom:10px">Ontem</div>
+      <div style="display:flex;flex-direction:column;margin-bottom:24px">
+        <div class="row" style="justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--color-divider)">
+          <div class="row" style="gap:12px"><i data-lucide="file-check-2" style="width:20px;height:20px;color:var(--color-accent-700)"></i>
+            <div><div style="font-size:13.5px;font-weight:600">Curriculo_2026.pdf</div><div style="font-size:11.5px;color:var(--color-neutral-500)">18:51 · 380 KB</div></div>
+          </div>
+          <span class="tag tag-accent">Concluído</span>
+        </div>
+        <div class="row" style="justify-content:space-between;padding:12px 0">
+          <div class="row" style="gap:12px"><i data-lucide="file-x" style="width:20px;height:20px;color:var(--color-neutral-500)"></i>
+            <div><div style="font-size:13.5px;font-weight:600">Proposta_Comercial.docx</div><div style="font-size:11.5px;color:var(--color-neutral-500)">08:14 · falhou</div></div>
+          </div>
+          <span class="tag tag-outline">Erro</span>
+        </div>
+      </div>
+    </div>
+    <div class="navbar">
+      <div class="navitem"><i data-lucide="house" style="width:20px;height:20px"></i>Início</div>
+      <div class="navitem active"><i data-lucide="history" style="width:20px;height:20px"></i>Histórico</div>
+      <div class="navitem"><i data-lucide="user" style="width:20px;height:20px"></i>Perfil</div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">06 · Perfil / Configurações</div>
+  <div class="screen">
+    <div style="flex:1;overflow:auto;padding:24px 24px 12px;box-sizing:border-box">
+      <h2 style="font-size:24px;margin:0 0 20px">Perfil</h2>
+      <div class="row" style="gap:14px;margin-bottom:28px">
+        <div style="width:56px;height:56px;border-radius:999px;background:var(--color-surface);border:1px solid var(--color-divider);display:flex;align-items:center;justify-content:center">
+          <i data-lucide="user" style="width:26px;height:26px;color:var(--color-neutral-700)"></i>
+        </div>
+        <div>
+          <div style="font:600 16px var(--font-heading)">Usuário DiaKit</div>
+          <span class="tag tag-outline" style="margin-top:4px">Conta gratuita</span>
+        </div>
+      </div>
+
+      <div class="kicker" style="margin-bottom:8px">Preferências</div>
+      <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);margin-bottom:24px;overflow:hidden">
+        <div class="row" style="justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--color-divider)">
+          <div class="row" style="gap:12px"><i data-lucide="bell" style="width:18px;height:18px"></i><span style="font-size:14px">Notificações</span></div>
+          <i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--color-neutral-500)"></i>
+        </div>
+        <div class="row" style="justify-content:space-between;padding:14px 16px">
+          <div class="row" style="gap:12px"><i data-lucide="globe" style="width:18px;height:18px"></i><span style="font-size:14px">Idioma</span></div>
+          <div class="row" style="gap:6px;color:var(--color-neutral-500)"><span style="font-size:13px">Português</span><i data-lucide="chevron-right" style="width:16px;height:16px"></i></div>
+        </div>
+      </div>
+
+      <div class="kicker" style="margin-bottom:8px">Suporte</div>
+      <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);margin-bottom:24px;overflow:hidden">
+        <div class="row" style="justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--color-divider)">
+          <div class="row" style="gap:12px"><i data-lucide="circle-help" style="width:18px;height:18px"></i><span style="font-size:14px">Ajuda</span></div>
+          <i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--color-neutral-500)"></i>
+        </div>
+        <div class="row" style="justify-content:space-between;padding:14px 16px">
+          <div class="row" style="gap:12px"><i data-lucide="message-square" style="width:18px;height:18px"></i><span style="font-size:14px">Enviar feedback</span></div>
+          <i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--color-neutral-500)"></i>
+        </div>
+      </div>
+
+      <div class="kicker" style="margin-bottom:8px">Sobre</div>
+      <div style="font-size:12.5px;color:var(--color-neutral-500);padding:4px 2px">DiaKit · versão 1.0.0</div>
+    </div>
+    <div class="navbar">
+      <div class="navitem"><i data-lucide="house" style="width:20px;height:20px"></i>Início</div>
+      <div class="navitem"><i data-lucide="history" style="width:20px;height:20px"></i>Histórico</div>
+      <div class="navitem active"><i data-lucide="user" style="width:20px;height:20px"></i>Perfil</div>
+    </div>
+  </div>
+</div>
+
+<div style="padding:0 64px;box-sizing:border-box"><div class="kicker" style="font-size:13px;margin-bottom:16px">Modo escuro</div></div>
+
+<div class="gallery" style="display:flex;gap:56px;padding:0 64px 64px;overflow-x:auto;align-items:flex-start;box-sizing:border-box;font-family:var(--font-body);
+  --color-bg:#3a2220; --color-surface:#4a2b28; --color-text:#f3f2f2;
+  --color-divider:color-mix(in srgb, #f3f2f2 18%, transparent);
+  --color-neutral-100:#232220; --color-neutral-200:#2d2b2b; --color-neutral-300:#3c3a38;
+  --color-neutral-400:#57534f; --color-neutral-500:#9c9690; --color-neutral-700:#c9c4be; --color-neutral-900:#f3f2f2;
+  --color-accent:#c17f72; --color-accent-100:#3f2221; --color-accent-700:#eed3ce;
+  --color-accent-2:#c39c68; --color-accent-2-100:#4d3323; --color-accent-2-700:#ecdcc4;
+  color:var(--color-text);
+">
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">07 · Splash / Onboarding</div>
+  <div class="screen">
+    <div style="flex:1;display:flex;flex-direction:column;padding:40px 28px;box-sizing:border-box">
+      <div style="flex:1;display:flex;align-items:center;justify-content:center">
+        <div style="width:100%;aspect-ratio:1/0.9;background:var(--color-surface);border:1px solid var(--color-divider);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;gap:18px;box-shadow:var(--shadow-sm)">
+          <i data-lucide="file-text" style="width:44px;height:44px;color:var(--color-neutral-700)"></i>
+          <i data-lucide="arrow-right" style="width:22px;height:22px;color:var(--color-accent)"></i>
+          <i data-lucide="file-check-2" style="width:44px;height:44px;color:var(--color-accent-700)"></i>
+        </div>
+      </div>
+      <div style="flex:none">
+        <h1 style="font-size:44px;margin:0 0 10px;letter-spacing:-.01em">DiaKit</h1>
+        <p style="font-size:15px;color:var(--color-neutral-700);margin:0 0 28px;line-height:1.6">Ferramentas essenciais para o seu dia a dia, direto do bolso. Comece transformando seus documentos DOC e DOCX em PDF prontos para imprimir.</p>
+        <div style="display:flex;gap:6px;justify-content:center;margin-bottom:24px">
+          <div style="width:20px;height:4px;border-radius:2px;background:var(--color-accent)"></div>
+          <div style="width:8px;height:4px;border-radius:2px;background:var(--color-divider)"></div>
+          <div style="width:8px;height:4px;border-radius:2px;background:var(--color-divider)"></div>
+        </div>
+        <button class="btn btn-primary btn-block" style="height:48px;font-size:15px">Começar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">08 · Home</div>
+  <div class="screen">
+    <div style="flex:1;overflow:auto;padding:24px 24px 12px;box-sizing:border-box">
+      <div class="row" style="justify-content:space-between;margin-bottom:28px">
+        <div>
+          <div class="kicker">Olá</div>
+          <h2 style="font-size:26px;margin:2px 0 0">O que vamos fazer hoje?</h2>
+        </div>
+        <div class="btn btn-icon btn-secondary" style="border-radius:999px"><i data-lucide="user" style="width:18px;height:18px"></i></div>
+      </div>
+
+      <div style="border:1px solid var(--color-accent);border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow-sm);margin-bottom:32px">
+        <div class="row" style="justify-content:space-between;margin-bottom:14px">
+          <div style="width:44px;height:44px;border-radius:var(--radius-md);background:var(--color-accent-100);display:flex;align-items:center;justify-content:center">
+            <i data-lucide="file-output" style="width:22px;height:22px;color:var(--color-accent-700)"></i>
+          </div>
+          <i data-lucide="arrow-right" style="width:18px;height:18px;color:var(--color-accent)"></i>
+        </div>
+        <h3 style="font-size:19px;margin:0 0 6px">Converter para PDF</h3>
+        <p style="font-size:13.5px;color:var(--color-neutral-700);margin:0">Transforme arquivos DOC e DOCX em PDF prontos para impressão.</p>
+      </div>
+
+      <div class="kicker" style="margin-bottom:14px">Em breve</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:16px;opacity:.55;position:relative">
+          <i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i>
+          <i data-lucide="file-symlink" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i>
+          <div style="font:600 14px var(--font-heading)">PDF → Word</div>
+        </div>
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:16px;opacity:.55;position:relative">
+          <i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i>
+          <i data-lucide="minimize-2" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i>
+          <div style="font:600 14px var(--font-heading)">Comprimir PDF</div>
+        </div>
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:16px;opacity:.55;position:relative">
+          <i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i>
+          <i data-lucide="signature" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i>
+          <div style="font:600 14px var(--font-heading)">Assinar PDF</div>
+        </div>
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:16px;opacity:.55;position:relative">
+          <i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i>
+          <i data-lucide="image" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i>
+          <div style="font:600 14px var(--font-heading)">PDF → Imagem</div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar">
+      <div class="navitem active"><i data-lucide="house" style="width:20px;height:20px"></i>Início</div>
+      <div class="navitem"><i data-lucide="history" style="width:20px;height:20px"></i>Histórico</div>
+      <div class="navitem"><i data-lucide="user" style="width:20px;height:20px"></i>Perfil</div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">09 · Converter — arquivo selecionado</div>
+  <div class="screen">
+    <div style="flex:1;overflow:auto;padding:20px 24px;box-sizing:border-box">
+      <div class="row" style="margin-bottom:24px;gap:14px">
+        <i data-lucide="arrow-left" style="width:20px;height:20px"></i>
+        <h2 style="font-size:20px;margin:0">Converter para PDF</h2>
+      </div>
+
+      <div style="border:1.5px dashed var(--color-divider);border-radius:var(--radius-lg);padding:36px 20px;text-align:center;margin-bottom:20px">
+        <i data-lucide="upload-cloud" style="width:32px;height:32px;color:var(--color-accent);margin-bottom:12px"></i>
+        <div style="font:600 15px var(--font-heading);margin-bottom:4px">Toque para selecionar um arquivo</div>
+        <div style="font-size:12.5px;color:var(--color-neutral-500)">DOC ou DOCX, até 25MB</div>
+      </div>
+
+      <div class="kicker" style="margin-bottom:10px">Arquivo selecionado</div>
+      <div class="row" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:14px;justify-content:space-between;margin-bottom:28px">
+        <div class="row" style="gap:12px">
+          <i data-lucide="file-text" style="width:26px;height:26px;color:var(--color-accent-700)"></i>
+          <div>
+            <div style="font-size:13.5px;font-weight:600">Relatório_Trimestral.docx</div>
+            <div style="font-size:12px;color:var(--color-neutral-500)">1,4 MB</div>
+          </div>
+        </div>
+        <i data-lucide="x" style="width:16px;height:16px;color:var(--color-neutral-500)"></i>
+      </div>
+
+      <div class="hr" style="margin:0 0 20px"></div>
+      <div style="font-size:12.5px;color:var(--color-neutral-500);line-height:1.6">O arquivo é convertido no seu aparelho. Nada é enviado a servidores externos.</div>
+    </div>
+    <div style="padding:20px 24px 28px;box-sizing:border-box;border-top:1px solid var(--color-divider)">
+      <button class="btn btn-primary btn-block" style="height:48px;font-size:15px">Converter para PDF</button>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">10 · Resultado / Download</div>
+  <div class="screen">
+    <div style="flex:1;display:flex;flex-direction:column;padding:32px 28px;box-sizing:border-box">
+      <div class="row" style="margin-bottom:32px;gap:14px">
+        <i data-lucide="arrow-left" style="width:20px;height:20px"></i>
+        <h2 style="font-size:20px;margin:0">Conversão concluída</h2>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center">
+        <div style="width:84px;height:84px;border-radius:999px;border:1.5px solid var(--color-accent);display:flex;align-items:center;justify-content:center;margin-bottom:24px">
+          <i data-lucide="check" style="width:36px;height:36px;color:var(--color-accent-700)"></i>
+        </div>
+        <h3 style="font-size:21px;margin:0 0 8px">Seu arquivo está pronto!</h3>
+        <p style="font-size:13.5px;color:var(--color-neutral-700);margin:0 0 28px">Pronto para imprimir ou compartilhar.</p>
+        <div class="row" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:14px 18px;gap:12px;width:100%;box-sizing:border-box;justify-content:flex-start">
+          <i data-lucide="file-check-2" style="width:26px;height:26px;color:var(--color-accent-700)"></i>
+          <div style="text-align:left">
+            <div style="font-size:13.5px;font-weight:600">Relatório_Trimestral.pdf</div>
+            <div style="font-size:12px;color:var(--color-neutral-500)">1,2 MB</div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button class="btn btn-primary btn-block" style="height:48px;font-size:15px"><i data-lucide="download" style="width:16px;height:16px"></i>Baixar PDF</button>
+        <button class="btn btn-secondary btn-block" style="height:44px;font-size:14px;margin-top:0"><i data-lucide="share-2" style="width:15px;height:15px"></i>Compartilhar</button>
+        <button class="btn btn-ghost" style="align-self:center;margin-top:4px">Converter outro arquivo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">11 · Histórico</div>
+  <div class="screen">
+    <div style="flex:1;overflow:auto;padding:24px 24px 12px;box-sizing:border-box">
+      <h2 style="font-size:24px;margin:0 0 24px">Histórico</h2>
+
+      <div class="kicker" style="margin-bottom:10px">Hoje</div>
+      <div style="display:flex;flex-direction:column;margin-bottom:24px">
+        <div class="row" style="justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--color-divider)">
+          <div class="row" style="gap:12px"><i data-lucide="file-check-2" style="width:20px;height:20px;color:var(--color-accent-700)"></i>
+            <div><div style="font-size:13.5px;font-weight:600">Relatório_Trimestral.pdf</div><div style="font-size:11.5px;color:var(--color-neutral-500)">14:32 · 1,2 MB</div></div>
+          </div>
+          <span class="tag tag-accent">Concluído</span>
+        </div>
+        <div class="row" style="justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--color-divider)">
+          <div class="row" style="gap:12px"><i data-lucide="file-check-2" style="width:20px;height:20px;color:var(--color-accent-700)"></i>
+            <div><div style="font-size:13.5px;font-weight:600">Contrato_Aluguel.pdf</div><div style="font-size:11.5px;color:var(--color-neutral-500)">09:07 · 640 KB</div></div>
+          </div>
+          <span class="tag tag-accent">Concluído</span>
+        </div>
+      </div>
+
+      <div class="kicker" style="margin-bottom:10px">Ontem</div>
+      <div style="display:flex;flex-direction:column;margin-bottom:24px">
+        <div class="row" style="justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--color-divider)">
+          <div class="row" style="gap:12px"><i data-lucide="file-check-2" style="width:20px;height:20px;color:var(--color-accent-700)"></i>
+            <div><div style="font-size:13.5px;font-weight:600">Curriculo_2026.pdf</div><div style="font-size:11.5px;color:var(--color-neutral-500)">18:51 · 380 KB</div></div>
+          </div>
+          <span class="tag tag-accent">Concluído</span>
+        </div>
+        <div class="row" style="justify-content:space-between;padding:12px 0">
+          <div class="row" style="gap:12px"><i data-lucide="file-x" style="width:20px;height:20px;color:var(--color-neutral-500)"></i>
+            <div><div style="font-size:13.5px;font-weight:600">Proposta_Comercial.docx</div><div style="font-size:11.5px;color:var(--color-neutral-500)">08:14 · falhou</div></div>
+          </div>
+          <span class="tag tag-outline">Erro</span>
+        </div>
+      </div>
+    </div>
+    <div class="navbar">
+      <div class="navitem"><i data-lucide="house" style="width:20px;height:20px"></i>Início</div>
+      <div class="navitem active"><i data-lucide="history" style="width:20px;height:20px"></i>Histórico</div>
+      <div class="navitem"><i data-lucide="user" style="width:20px;height:20px"></i>Perfil</div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">12 · Perfil / Configurações</div>
+  <div class="screen">
+    <div style="flex:1;overflow:auto;padding:24px 24px 12px;box-sizing:border-box">
+      <h2 style="font-size:24px;margin:0 0 20px">Perfil</h2>
+      <div class="row" style="gap:14px;margin-bottom:28px">
+        <div style="width:56px;height:56px;border-radius:999px;background:var(--color-surface);border:1px solid var(--color-divider);display:flex;align-items:center;justify-content:center">
+          <i data-lucide="user" style="width:26px;height:26px;color:var(--color-neutral-700)"></i>
+        </div>
+        <div>
+          <div style="font:600 16px var(--font-heading)">Usuário DiaKit</div>
+          <span class="tag tag-outline" style="margin-top:4px">Conta gratuita</span>
+        </div>
+      </div>
+
+      <div class="kicker" style="margin-bottom:8px">Preferências</div>
+      <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);margin-bottom:24px;overflow:hidden">
+        <div class="row" style="justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--color-divider)">
+          <div class="row" style="gap:12px"><i data-lucide="bell" style="width:18px;height:18px"></i><span style="font-size:14px">Notificações</span></div>
+          <i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--color-neutral-500)"></i>
+        </div>
+        <div class="row" style="justify-content:space-between;padding:14px 16px">
+          <div class="row" style="gap:12px"><i data-lucide="globe" style="width:18px;height:18px"></i><span style="font-size:14px">Idioma</span></div>
+          <div class="row" style="gap:6px;color:var(--color-neutral-500)"><span style="font-size:13px">Português</span><i data-lucide="chevron-right" style="width:16px;height:16px"></i></div>
+        </div>
+      </div>
+
+      <div class="kicker" style="margin-bottom:8px">Suporte</div>
+      <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);margin-bottom:24px;overflow:hidden">
+        <div class="row" style="justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--color-divider)">
+          <div class="row" style="gap:12px"><i data-lucide="circle-help" style="width:18px;height:18px"></i><span style="font-size:14px">Ajuda</span></div>
+          <i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--color-neutral-500)"></i>
+        </div>
+        <div class="row" style="justify-content:space-between;padding:14px 16px">
+          <div class="row" style="gap:12px"><i data-lucide="message-square" style="width:18px;height:18px"></i><span style="font-size:14px">Enviar feedback</span></div>
+          <i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--color-neutral-500)"></i>
+        </div>
+      </div>
+
+      <div class="kicker" style="margin-bottom:8px">Sobre</div>
+      <div style="font-size:12.5px;color:var(--color-neutral-500);padding:4px 2px">DiaKit · versão 1.0.0</div>
+    </div>
+    <div class="navbar">
+      <div class="navitem"><i data-lucide="house" style="width:20px;height:20px"></i>Início</div>
+      <div class="navitem"><i data-lucide="history" style="width:20px;height:20px"></i>Histórico</div>
+      <div class="navitem active"><i data-lucide="user" style="width:20px;height:20px"></i>Perfil</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div style="padding:32px 64px 0;box-sizing:border-box"><div class="kicker" style="font-size:13px;margin-bottom:16px">Desktop</div></div>
+
+<div style="display:flex;flex-direction:column;gap:40px;padding:0 64px 64px;box-sizing:border-box;font-family:var(--font-body)">
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">13 · Desktop — Home</div>
+  <div style="width:1280px;height:800px;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:12px;box-shadow:var(--shadow-lg);overflow:hidden;display:flex">
+    <div style="width:240px;flex:none;border-right:1px solid var(--color-divider);padding:28px 20px;box-sizing:border-box;display:flex;flex-direction:column">
+      <div class="row" style="gap:10px;margin-bottom:36px">
+        <svg width="26" height="26" viewBox="0 0 56 56" fill="none"><rect x="14" y="6" width="28" height="36" rx="3" stroke="#8c4a48" stroke-width="3"/><path d="M32 6v9h9" stroke="#8c4a48" stroke-width="3" stroke-linejoin="round"/><path d="M20 30l5 5 11-13" stroke="#a9784f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="font:600 20px var(--font-heading)">DiaKit</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);background:var(--color-accent-100);color:var(--color-accent-700);font-size:14px;font-weight:600"><i data-lucide="house" style="width:18px;height:18px"></i>Início</div>
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="history" style="width:18px;height:18px"></i>Histórico</div>
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="user" style="width:18px;height:18px"></i>Perfil</div>
+      </div>
+    </div>
+    <div style="flex:1;padding:40px 48px;box-sizing:border-box;overflow:auto">
+      <div class="row" style="justify-content:space-between;margin-bottom:36px">
+        <div><div class="kicker">Olá</div><h2 style="font-size:28px;margin:4px 0 0">O que vamos fazer hoje?</h2></div>
+        <div class="btn btn-icon btn-secondary" style="border-radius:999px"><i data-lucide="user" style="width:18px;height:18px"></i></div>
+      </div>
+      <div style="border:1px solid var(--color-accent);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-sm);max-width:420px;margin-bottom:40px">
+        <div class="row" style="justify-content:space-between;margin-bottom:16px">
+          <div style="width:48px;height:48px;border-radius:var(--radius-md);background:var(--color-accent-100);display:flex;align-items:center;justify-content:center"><i data-lucide="file-output" style="width:24px;height:24px;color:var(--color-accent-700)"></i></div>
+          <i data-lucide="arrow-right" style="width:18px;height:18px;color:var(--color-accent)"></i>
+        </div>
+        <h3 style="font-size:20px;margin:0 0 6px">Converter para PDF</h3>
+        <p style="font-size:14px;color:var(--color-neutral-700);margin:0">Transforme arquivos DOC e DOCX em PDF prontos para impressão.</p>
+      </div>
+      <div class="kicker" style="margin-bottom:16px">Em breve</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:900px">
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:18px;opacity:.55;position:relative"><i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i><i data-lucide="file-symlink" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i><div style="font:600 14px var(--font-heading)">PDF → Word</div></div>
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:18px;opacity:.55;position:relative"><i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i><i data-lucide="minimize-2" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i><div style="font:600 14px var(--font-heading)">Comprimir PDF</div></div>
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:18px;opacity:.55;position:relative"><i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i><i data-lucide="signature" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i><div style="font:600 14px var(--font-heading)">Assinar PDF</div></div>
+        <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);padding:18px;opacity:.55;position:relative"><i data-lucide="lock" style="width:14px;height:14px;color:var(--color-neutral-500);position:absolute;top:14px;right:14px"></i><i data-lucide="image" style="width:24px;height:24px;color:var(--color-neutral-700);margin-bottom:10px"></i><div style="font:600 14px var(--font-heading)">PDF → Imagem</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">14 · Desktop — Converter</div>
+  <div style="width:1280px;height:800px;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:12px;box-shadow:var(--shadow-lg);overflow:hidden;display:flex">
+    <div style="width:240px;flex:none;border-right:1px solid var(--color-divider);padding:28px 20px;box-sizing:border-box;display:flex;flex-direction:column">
+      <div class="row" style="gap:10px;margin-bottom:36px">
+        <svg width="26" height="26" viewBox="0 0 56 56" fill="none"><rect x="14" y="6" width="28" height="36" rx="3" stroke="#8c4a48" stroke-width="3"/><path d="M32 6v9h9" stroke="#8c4a48" stroke-width="3" stroke-linejoin="round"/><path d="M20 30l5 5 11-13" stroke="#a9784f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="font:600 20px var(--font-heading)">DiaKit</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="house" style="width:18px;height:18px"></i>Início</div>
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="history" style="width:18px;height:18px"></i>Histórico</div>
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="user" style="width:18px;height:18px"></i>Perfil</div>
+      </div>
+    </div>
+    <div style="flex:1;padding:40px 48px;box-sizing:border-box;overflow:auto;display:flex;flex-direction:column;align-items:center">
+      <div style="width:100%;max-width:560px">
+        <h2 style="font-size:26px;margin:0 0 28px">Converter para PDF</h2>
+        <div style="border:1.5px dashed var(--color-divider);border-radius:var(--radius-lg);padding:56px 20px;text-align:center;margin-bottom:24px">
+          <i data-lucide="upload-cloud" style="width:36px;height:36px;color:var(--color-accent);margin-bottom:14px"></i>
+          <div style="font:600 16px var(--font-heading);margin-bottom:4px">Arraste um arquivo ou clique para selecionar</div>
+          <div style="font-size:13px;color:var(--color-neutral-500)">DOC ou DOCX, até 25MB</div>
+        </div>
+        <div class="kicker" style="margin-bottom:10px">Arquivo selecionado</div>
+        <div class="row" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:16px;justify-content:space-between;margin-bottom:32px">
+          <div class="row" style="gap:12px"><i data-lucide="file-text" style="width:26px;height:26px;color:var(--color-accent-700)"></i><div><div style="font-size:14px;font-weight:600">Relatório_Trimestral.docx</div><div style="font-size:12px;color:var(--color-neutral-500)">1,4 MB</div></div></div>
+          <i data-lucide="x" style="width:16px;height:16px;color:var(--color-neutral-500)"></i>
+        </div>
+        <button class="btn btn-primary" style="height:46px;font-size:15px;padding:0 28px">Converter para PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">15 · Desktop — Resultado</div>
+  <div style="width:1280px;height:800px;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:12px;box-shadow:var(--shadow-lg);overflow:hidden;display:flex">
+    <div style="width:240px;flex:none;border-right:1px solid var(--color-divider);padding:28px 20px;box-sizing:border-box;display:flex;flex-direction:column">
+      <div class="row" style="gap:10px;margin-bottom:36px">
+        <svg width="26" height="26" viewBox="0 0 56 56" fill="none"><rect x="14" y="6" width="28" height="36" rx="3" stroke="#8c4a48" stroke-width="3"/><path d="M32 6v9h9" stroke="#8c4a48" stroke-width="3" stroke-linejoin="round"/><path d="M20 30l5 5 11-13" stroke="#a9784f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="font:600 20px var(--font-heading)">DiaKit</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="house" style="width:18px;height:18px"></i>Início</div>
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="history" style="width:18px;height:18px"></i>Histórico</div>
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="user" style="width:18px;height:18px"></i>Perfil</div>
+      </div>
+    </div>
+    <div style="flex:1;padding:40px 48px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center">
+      <div style="width:84px;height:84px;border-radius:999px;border:1.5px solid var(--color-accent);display:flex;align-items:center;justify-content:center;margin-bottom:24px"><i data-lucide="check" style="width:36px;height:36px;color:var(--color-accent-700)"></i></div>
+      <h3 style="font-size:24px;margin:0 0 8px">Seu arquivo está pronto!</h3>
+      <p style="font-size:14px;color:var(--color-neutral-700);margin:0 0 28px">Pronto para imprimir ou compartilhar.</p>
+      <div class="row" style="border:1px solid var(--color-divider);border-radius:var(--radius-md);padding:16px 20px;gap:12px;width:360px;box-sizing:border-box;justify-content:flex-start;margin-bottom:28px">
+        <i data-lucide="file-check-2" style="width:26px;height:26px;color:var(--color-accent-700)"></i>
+        <div><div style="font-size:14px;font-weight:600">Relatório_Trimestral.pdf</div><div style="font-size:12px;color:var(--color-neutral-500)">1,2 MB</div></div>
+      </div>
+      <div class="row" style="gap:12px">
+        <button class="btn btn-primary" style="height:44px;font-size:14px;padding:0 24px"><i data-lucide="download" style="width:15px;height:15px"></i>Baixar PDF</button>
+        <button class="btn btn-secondary" style="height:44px;font-size:14px;padding:0 24px"><i data-lucide="share-2" style="width:15px;height:15px"></i>Compartilhar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">16 · Desktop — Histórico</div>
+  <div style="width:1280px;height:800px;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:12px;box-shadow:var(--shadow-lg);overflow:hidden;display:flex">
+    <div style="width:240px;flex:none;border-right:1px solid var(--color-divider);padding:28px 20px;box-sizing:border-box;display:flex;flex-direction:column">
+      <div class="row" style="gap:10px;margin-bottom:36px">
+        <svg width="26" height="26" viewBox="0 0 56 56" fill="none"><rect x="14" y="6" width="28" height="36" rx="3" stroke="#8c4a48" stroke-width="3"/><path d="M32 6v9h9" stroke="#8c4a48" stroke-width="3" stroke-linejoin="round"/><path d="M20 30l5 5 11-13" stroke="#a9784f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="font:600 20px var(--font-heading)">DiaKit</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="house" style="width:18px;height:18px"></i>Início</div>
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);background:var(--color-accent-100);color:var(--color-accent-700);font-size:14px;font-weight:600"><i data-lucide="history" style="width:18px;height:18px"></i>Histórico</div>
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="user" style="width:18px;height:18px"></i>Perfil</div>
+      </div>
+    </div>
+    <div style="flex:1;padding:40px 48px;box-sizing:border-box;overflow:auto">
+      <h2 style="font-size:28px;margin:0 0 32px">Histórico</h2>
+      <div class="kicker" style="margin-bottom:12px">Hoje</div>
+      <div style="display:flex;flex-direction:column;margin-bottom:28px;max-width:760px">
+        <div class="row" style="justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--color-divider)"><div class="row" style="gap:12px"><i data-lucide="file-check-2" style="width:20px;height:20px;color:var(--color-accent-700)"></i><div><div style="font-size:14px;font-weight:600">Relatório_Trimestral.pdf</div><div style="font-size:12px;color:var(--color-neutral-500)">14:32 · 1,2 MB</div></div></div><span class="tag tag-accent">Concluído</span></div>
+        <div class="row" style="justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--color-divider)"><div class="row" style="gap:12px"><i data-lucide="file-check-2" style="width:20px;height:20px;color:var(--color-accent-700)"></i><div><div style="font-size:14px;font-weight:600">Contrato_Aluguel.pdf</div><div style="font-size:12px;color:var(--color-neutral-500)">09:07 · 640 KB</div></div></div><span class="tag tag-accent">Concluído</span></div>
+      </div>
+      <div class="kicker" style="margin-bottom:12px">Ontem</div>
+      <div style="display:flex;flex-direction:column;max-width:760px">
+        <div class="row" style="justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--color-divider)"><div class="row" style="gap:12px"><i data-lucide="file-check-2" style="width:20px;height:20px;color:var(--color-accent-700)"></i><div><div style="font-size:14px;font-weight:600">Curriculo_2026.pdf</div><div style="font-size:12px;color:var(--color-neutral-500)">18:51 · 380 KB</div></div></div><span class="tag tag-accent">Concluído</span></div>
+        <div class="row" style="justify-content:space-between;padding:14px 0"><div class="row" style="gap:12px"><i data-lucide="file-x" style="width:20px;height:20px;color:var(--color-neutral-500)"></i><div><div style="font-size:14px;font-weight:600">Proposta_Comercial.docx</div><div style="font-size:12px;color:var(--color-neutral-500)">08:14 · falhou</div></div></div><span class="tag tag-outline">Erro</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="kicker" style="margin-bottom:12px">17 · Desktop — Perfil</div>
+  <div style="width:1280px;height:800px;background:var(--color-bg);border:1px solid var(--color-divider);border-radius:12px;box-shadow:var(--shadow-lg);overflow:hidden;display:flex">
+    <div style="width:240px;flex:none;border-right:1px solid var(--color-divider);padding:28px 20px;box-sizing:border-box;display:flex;flex-direction:column">
+      <div class="row" style="gap:10px;margin-bottom:36px">
+        <svg width="26" height="26" viewBox="0 0 56 56" fill="none"><rect x="14" y="6" width="28" height="36" rx="3" stroke="#8c4a48" stroke-width="3"/><path d="M32 6v9h9" stroke="#8c4a48" stroke-width="3" stroke-linejoin="round"/><path d="M20 30l5 5 11-13" stroke="#a9784f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div style="font:600 20px var(--font-heading)">DiaKit</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="house" style="width:18px;height:18px"></i>Início</div>
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);color:var(--color-neutral-700);font-size:14px"><i data-lucide="history" style="width:18px;height:18px"></i>Histórico</div>
+        <div class="row" style="gap:12px;padding:10px 12px;border-radius:var(--radius-md);background:var(--color-accent-100);color:var(--color-accent-700);font-size:14px;font-weight:600"><i data-lucide="user" style="width:18px;height:18px"></i>Perfil</div>
+      </div>
+    </div>
+    <div style="flex:1;padding:40px 48px;box-sizing:border-box;overflow:auto">
+      <h2 style="font-size:28px;margin:0 0 28px">Perfil</h2>
+      <div class="row" style="gap:16px;margin-bottom:32px">
+        <div style="width:64px;height:64px;border-radius:999px;background:var(--color-surface);border:1px solid var(--color-divider);display:flex;align-items:center;justify-content:center"><i data-lucide="user" style="width:28px;height:28px;color:var(--color-neutral-700)"></i></div>
+        <div><div style="font:600 18px var(--font-heading)">Usuário DiaKit</div><span class="tag tag-outline" style="margin-top:4px">Conta gratuita</span></div>
+      </div>
+      <div class="kicker" style="margin-bottom:10px">Preferências</div>
+      <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);margin-bottom:28px;overflow:hidden;max-width:520px">
+        <div class="row" style="justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--color-divider)"><div class="row" style="gap:12px"><i data-lucide="bell" style="width:18px;height:18px"></i><span style="font-size:14px">Notificações</span></div><i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--color-neutral-500)"></i></div>
+        <div class="row" style="justify-content:space-between;padding:16px 18px"><div class="row" style="gap:12px"><i data-lucide="globe" style="width:18px;height:18px"></i><span style="font-size:14px">Idioma</span></div><div class="row" style="gap:6px;color:var(--color-neutral-500)"><span style="font-size:13px">Português</span><i data-lucide="chevron-right" style="width:16px;height:16px"></i></div></div>
+      </div>
+      <div class="kicker" style="margin-bottom:10px">Suporte</div>
+      <div style="border:1px solid var(--color-divider);border-radius:var(--radius-lg);overflow:hidden;max-width:520px">
+        <div class="row" style="justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--color-divider)"><div class="row" style="gap:12px"><i data-lucide="circle-help" style="width:18px;height:18px"></i><span style="font-size:14px">Ajuda</span></div><i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--color-neutral-500)"></i></div>
+        <div class="row" style="justify-content:space-between;padding:16px 18px"><div class="row" style="gap:12px"><i data-lucide="message-square" style="width:18px;height:18px"></i><span style="font-size:14px">Enviar feedback</span></div><i data-lucide="chevron-right" style="width:16px;height:16px;color:var(--color-neutral-500)"></i></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    if (window.lucide) window.lucide.createIcons();
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

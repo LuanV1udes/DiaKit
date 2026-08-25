@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
-    "fetch-libreoffice": "powershell -ExecutionPolicy Bypass -File scripts/fetch-libreoffice.ps1"
+    "fetch-libreoffice": "node scripts/fetch-libreoffice.js"
   },
   "license": "SEE LICENSE IN LICENSE",
   "dependencies": {

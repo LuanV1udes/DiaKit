@@ -4,10 +4,13 @@ const path = require('path');
 const { execFile, execFileSync } = require('child_process');
 
 // Copia embutida no proprio pacote do DiaKit -- gerada por
-// scripts/fetch-libreoffice.ps1, nunca commitada (1,5GB). Prioridade sobre o
-// LibreOffice do sistema: e a que garante conversao sem exigir que o
-// usuario instale nada a parte.
-const BUNDLED_SOFFICE = path.join(__dirname, '..', '..', 'vendor', 'libreoffice', 'program', 'soffice.exe');
+// scripts/fetch-libreoffice.ps1 (so existe no Windows: e a unica plataforma
+// sem um jeito nativo de instalar via linha de comando). Prioridade sobre o
+// LibreOffice do sistema quando presente.
+const BUNDLED_SOFFICE = path.join(
+  __dirname, '..', '..', 'vendor', 'libreoffice', 'program',
+  process.platform === 'win32' ? 'soffice.exe' : 'soffice'
+);
 
 const CANDIDATE_PATHS = [
   BUNDLED_SOFFICE,
@@ -91,8 +94,9 @@ function runConversion(soffice, inputPath, outputDir, targetFormat) {
 function convert(inputPath, outputDir, targetFormat) {
   const soffice = findSofficeBinary();
   if (!soffice) {
+    const binName = process.platform === 'win32' ? 'soffice.exe' : 'soffice';
     return Promise.reject(new Error(
-      'LibreOffice nao encontrado. Instale o LibreOffice ou defina a variavel de ambiente SOFFICE_PATH apontando para o soffice.exe'
+      `LibreOffice nao encontrado. Instale o LibreOffice ou defina a variavel de ambiente SOFFICE_PATH apontando para o ${binName}`
     ));
   }
 

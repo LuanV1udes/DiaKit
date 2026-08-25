@@ -28,7 +28,7 @@ backend/   Node.js/Express — recebe o arquivo e chama o LibreOffice
            em modo headless para fazer a conversão de verdade
 ```
 
-O app conversa com o backend por HTTP (endereço configurável em *Perfil › Servidor de conversão*) — normalmente o próprio aparelho, mas pode ser outra máquina na mesma rede local. O backend nunca fala com a internet: ele só chama o binário do LibreOffice instalado na máquina (ou uma cópia portátil baixada por `backend/scripts/fetch-libreoffice.ps1`) e devolve o resultado.
+O app conversa com o backend por HTTP (endereço configurável em *Perfil › Servidor de conversão*) — normalmente o próprio aparelho, mas pode ser outra máquina na mesma rede local. O backend nunca fala com a internet: ele só chama o binário do LibreOffice instalado na máquina (ou uma cópia portátil baixada no Windows) e devolve o resultado.
 
 ## Como rodar localmente
 
@@ -36,9 +36,11 @@ O app conversa com o backend por HTTP (endereço configurável em *Perfil › Se
 ```bash
 cd backend
 npm install
-npm run fetch-libreoffice   # baixa uma cópia portátil do LibreOffice (~1,5GB), ou defina SOFFICE_PATH com uma instalação já existente
+npm run fetch-libreoffice   # Windows: baixa uma copia portatil do LibreOffice (~1,5GB). Linux/macOS: detecta o gerenciador de pacotes e mostra o comando de instalacao
 npm start                   # sobe em http://localhost:4123
 ```
+
+`fetch-libreoffice` detecta o sistema operacional automaticamente: no Windows ele baixa e extrai uma cópia portátil (não há gerenciador de pacotes padrão por lá); no Linux e macOS ele só verifica se o `soffice` já está disponível e, se não estiver, indica o comando certo para a sua distro (`apt`, `dnf`, `pacman`, `zypper`) ou o Homebrew. Em qualquer plataforma dá pra pular isso e apontar direto pra uma instalação existente com a variável `SOFFICE_PATH`.
 
 **App**
 ```bash

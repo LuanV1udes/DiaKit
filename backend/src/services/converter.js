@@ -10,9 +10,10 @@ function engineName() {
 
 function ensureReady() {
   if (!libreoffice.isConverterReady()) {
+    const binName = process.platform === 'win32' ? 'soffice.exe' : 'soffice';
     throw new Error(
       'LibreOffice nao encontrado. Instale o LibreOffice ou defina a variavel de ambiente '
-      + 'SOFFICE_PATH apontando para o soffice.exe, e rode a conversao de novo.'
+      + `SOFFICE_PATH apontando para o ${binName}, e rode a conversao de novo.`
     );
   }
 }

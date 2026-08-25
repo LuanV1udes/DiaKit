@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:path/path.dart' as p;
 
+import '../l10n/generated/app_localizations.dart';
 import '../models/conversion_entry.dart';
 import '../services/history_store.dart';
 import '../services/pdf_rasterizer.dart';
@@ -51,16 +52,18 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
   bool _draggingOver = false;
 
   Future<void> _pick() async {
+    final l10n = AppLocalizations.of(context)!;
     final picked = await FilePicker.pickFile(
       type: FileType.custom,
       allowedExtensions: const ['pdf'],
-      dialogTitle: 'Selecione um PDF',
+      dialogTitle: l10n.pickPdfDialogTitle,
     );
     if (picked == null) return;
     await _accept(picked.xFile);
   }
 
   Future<void> _accept(XFile file) async {
+    final l10n = AppLocalizations.of(context)!;
     // file.name pode vir com o caminho inteiro em vez de só o nome -- o
     // cross_file so separa pelo separador nativo da plataforma (`\` no
     // Windows), entao um path com `/` (o drop, por exemplo, pode entregar
@@ -69,7 +72,7 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
     if (!name.toLowerCase().endsWith('.pdf')) {
       setState(() {
         _status = _Status.error;
-        _error = 'Só dá para converter arquivos PDF.';
+        _error = l10n.errorUnsupportedFile('PDF');
       });
       return;
     }
@@ -78,7 +81,9 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
     if (size > kMaxUploadBytes) {
       setState(() {
         _status = _Status.error;
-        _error = 'O arquivo tem ${formatBytes(size)} e o limite é de 25 MB.';
+        _error = l10n.errorFileTooBig(
+          formatBytes(size, locale: intlLocale(Localizations.localeOf(context))),
+        );
       });
       return;
     }
@@ -142,20 +147,23 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
         MaterialPageRoute(builder: (_) => ImagesResultScreen(output: output)),
       );
     } on RasterizeException catch (e) {
+      if (!mounted) return;
+      final message = e.describe(AppLocalizations.of(context)!);
+
       await HistoryStore.instance.add(
         ConversionEntry(
           fileName: _fileName ?? file.name,
           at: DateTime.now(),
           status: ConversionStatus.error,
           kind: ConversionKind.pdfToImages,
-          errorMessage: e.message,
+          errorMessage: message,
         ),
       );
 
       if (!mounted) return;
       setState(() {
         _status = _Status.error;
-        _error = e.message;
+        _error = message;
       });
     }
   }
@@ -187,7 +195,7 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
     return Column(
       children: [
         ScreenHeader(
-          title: 'PDF para Imagem',
+          title: AppLocalizations.of(context)!.pdfToImageTitle,
           onBack: () => Navigator.of(context).maybePop(),
         ),
         Expanded(
@@ -211,6 +219,7 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
 
   Widget _desktopBody(bool canConvert) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(48, 40, 48, 40),
@@ -220,7 +229,7 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('PDF para Imagem', style: AppText.h1.copyWith(color: c.text)),
+              Text(l10n.pdfToImageTitle, style: AppText.h1.copyWith(color: c.text)),
               const SizedBox(height: 28),
               _dropzone(isDesktop: true),
               const SizedBox(height: 24),
@@ -231,7 +240,7 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
                 const SizedBox(height: 16),
               ],
               AppButton(
-                label: _buttonLabel,
+                label: _buttonLabel(l10n),
                 onPressed: canConvert ? _convert : null,
                 height: 46,
                 horizontalPadding: 28,
@@ -247,6 +256,7 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
 
   Widget _dropzone({required bool isDesktop}) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return DashedBox(
       onTap: _status == _Status.converting ? null : _pick,
@@ -262,8 +272,8 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
           SizedBox(height: isDesktop ? 14 : 12),
           Text(
             _supportsDrop && isDesktop
-                ? 'Arraste um PDF ou clique para selecionar'
-                : 'Toque para selecionar um PDF',
+                ? l10n.dropzoneDragPdf
+                : l10n.dropzoneTapPdf,
             textAlign: TextAlign.center,
             style: AppText.h6.copyWith(
               fontSize: isDesktop ? 16 : 15,
@@ -272,7 +282,7 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            'PDF, até 25MB',
+            l10n.uploadHint('PDF'),
             style: (isDesktop ? AppText.bodySm : AppText.caption).copyWith(
               fontSize: isDesktop ? 13 : 12.5,
               color: c.neutral500,
@@ -286,13 +296,14 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
   List<Widget> _selectedFileSection({required bool isDesktop}) {
     final file = _file;
     if (file == null) return const [];
+    final l10n = AppLocalizations.of(context)!;
 
     return [
-      const Kicker('Arquivo selecionado', bottom: 10),
+      Kicker(l10n.selectedFileKicker, bottom: 10),
       FileCard(
         icon: LucideIcons.fileText,
         name: _fileName ?? file.name,
-        meta: formatBytes(_fileSize),
+        meta: formatBytes(_fileSize, locale: intlLocale(Localizations.localeOf(context))),
         onRemove: _status == _Status.converting ? null : _remove,
         padding: EdgeInsets.all(isDesktop ? 16 : 14),
       ),
@@ -330,17 +341,16 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
   Widget _privacyNote() {
     final c = context.c;
     return Text(
-      'As imagens são geradas no seu aparelho. Nada é enviado a servidores '
-      'externos.',
+      AppLocalizations.of(context)!.privacyNoteLocalImages,
       style: AppText.caption.copyWith(color: c.neutral500),
     );
   }
 
-  String get _buttonLabel => switch (_status) {
+  String _buttonLabel(AppLocalizations l10n) => switch (_status) {
     _Status.converting when _pagesTotal > 0 =>
-      'Página $_pagesDone de $_pagesTotal…',
-    _Status.converting => 'Convertendo…',
-    _ => 'Converter para Imagem',
+      l10n.pageProgress(_pagesDone, _pagesTotal),
+    _Status.converting => l10n.convertingLabel,
+    _ => l10n.convertToImageButton,
   };
 
   Widget _progressSection() {
@@ -367,7 +377,7 @@ class _PdfToImagesScreenState extends State<PdfToImagesScreen> {
             child: SafeArea(
               top: false,
               child: AppButton(
-                label: _buttonLabel,
+                label: _buttonLabel(AppLocalizations.of(context)!),
                 onPressed: canConvert ? _convert : null,
                 expand: true,
                 height: 48,

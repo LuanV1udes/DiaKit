@@ -5,6 +5,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../services/pdf_rasterizer.dart';
 import '../theme/layout.dart';
 import '../theme/tokens.dart';
@@ -26,10 +27,11 @@ class ImagesResultScreen extends StatelessWidget {
 
   Future<void> _openFolder(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context)!;
     final result = await OpenFilex.open(output.folder.path);
     if (result.type != ResultType.done) {
       messenger.showSnackBar(
-        SnackBar(content: Text('Não foi possível abrir a pasta: ${result.message}')),
+        SnackBar(content: Text(l10n.errorCouldNotOpenFolder(result.message))),
       );
     }
   }
@@ -51,8 +53,7 @@ class ImagesResultScreen extends StatelessWidget {
     );
   }
 
-  String get _summaryLabel =>
-      '${output.pageCount} ${output.pageCount == 1 ? 'imagem' : 'imagens'}';
+  String _summaryLabel(AppLocalizations l10n) => l10n.imageCount(output.pageCount);
 
   @override
   Widget build(BuildContext context) {
@@ -64,12 +65,13 @@ class ImagesResultScreen extends StatelessWidget {
 
   Widget _mobile(BuildContext context) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ScreenHeader(
-          title: 'Conversão concluída',
+          title: l10n.conversionDoneTitle,
           onBack: () => Navigator.of(context).maybePop(),
           horizontalPadding: 28,
           top: 32,
@@ -89,12 +91,12 @@ class ImagesResultScreen extends StatelessWidget {
                           const SuccessBadge(),
                           const SizedBox(height: 24),
                           Text(
-                            'Suas imagens estão prontas!',
+                            l10n.imagesReadyTitle,
                             style: AppText.h3.copyWith(color: c.text),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'Uma imagem por página, prontas para compartilhar.',
+                            l10n.imagesReadySubtitle,
                             style: AppText.bodySm.copyWith(color: c.neutral700),
                           ),
                           const SizedBox(height: 28),
@@ -102,8 +104,11 @@ class ImagesResultScreen extends StatelessWidget {
                           const SizedBox(height: 16),
                           FileCard(
                             icon: LucideIcons.image,
-                            name: _summaryLabel,
-                            meta: formatBytes(output.totalBytes),
+                            name: _summaryLabel(l10n),
+                            meta: formatBytes(
+                              output.totalBytes,
+                              locale: intlLocale(Localizations.localeOf(context)),
+                            ),
                             padding: const EdgeInsets.symmetric(
                               horizontal: 18,
                               vertical: 14,
@@ -115,7 +120,7 @@ class ImagesResultScreen extends StatelessWidget {
                   ),
                 ),
                 AppButton(
-                  label: 'Abrir pasta',
+                  label: l10n.openFolderButton,
                   icon: LucideIcons.folderOpen,
                   onPressed: () => _openFolder(context),
                   expand: true,
@@ -123,7 +128,7 @@ class ImagesResultScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 AppButton(
-                  label: 'Compartilhar',
+                  label: l10n.shareButton,
                   icon: LucideIcons.share2,
                   variant: AppButtonVariant.secondary,
                   onPressed: _share,
@@ -134,7 +139,7 @@ class ImagesResultScreen extends StatelessWidget {
                 const SizedBox(height: 4),
                 Align(
                   child: AppButton(
-                    label: 'Converter outro PDF',
+                    label: l10n.convertAnotherPdfButton,
                     variant: AppButtonVariant.ghost,
                     onPressed: () => _convertAnother(context),
                     height: 40,
@@ -151,6 +156,7 @@ class ImagesResultScreen extends StatelessWidget {
 
   Widget _desktop(BuildContext context) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return Center(
       child: SingleChildScrollView(
@@ -161,12 +167,12 @@ class ImagesResultScreen extends StatelessWidget {
             const SuccessBadge(),
             const SizedBox(height: 24),
             Text(
-              'Suas imagens estão prontas!',
+              l10n.imagesReadyTitle,
               style: AppText.h2.copyWith(color: c.text),
             ),
             const SizedBox(height: 8),
             Text(
-              'Uma imagem por página, prontas para compartilhar.',
+              l10n.imagesReadySubtitle,
               style: AppText.body.copyWith(color: c.neutral700),
             ),
             const SizedBox(height: 28),
@@ -179,8 +185,11 @@ class ImagesResultScreen extends StatelessWidget {
               width: 360,
               child: FileCard(
                 icon: LucideIcons.image,
-                name: _summaryLabel,
-                meta: formatBytes(output.totalBytes),
+                name: _summaryLabel(l10n),
+                meta: formatBytes(
+                  output.totalBytes,
+                  locale: intlLocale(Localizations.localeOf(context)),
+                ),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 16,
@@ -192,7 +201,7 @@ class ImagesResultScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AppButton(
-                  label: 'Abrir pasta',
+                  label: l10n.openFolderButton,
                   icon: LucideIcons.folderOpen,
                   onPressed: () => _openFolder(context),
                   height: 44,
@@ -201,7 +210,7 @@ class ImagesResultScreen extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 AppButton(
-                  label: 'Compartilhar',
+                  label: l10n.shareButton,
                   icon: LucideIcons.share2,
                   variant: AppButtonVariant.secondary,
                   onPressed: _share,

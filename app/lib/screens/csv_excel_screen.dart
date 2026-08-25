@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:path/path.dart' as p;
 
+import '../l10n/generated/app_localizations.dart';
 import '../models/conversion_entry.dart';
 import '../services/converter_client.dart';
 import '../services/history_store.dart';
@@ -70,16 +71,18 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
   }
 
   Future<void> _pick() async {
+    final l10n = AppLocalizations.of(context)!;
     final picked = await FilePicker.pickFile(
       type: FileType.custom,
       allowedExtensions: _targetByExtension.keys.toList(),
-      dialogTitle: 'Selecione um CSV ou uma planilha',
+      dialogTitle: l10n.pickCsvDialogTitle,
     );
     if (picked == null) return;
     await _accept(picked.xFile);
   }
 
   Future<void> _accept(XFile file) async {
+    final l10n = AppLocalizations.of(context)!;
     // file.name pode vir com o caminho inteiro em vez de só o nome -- o
     // cross_file so separa pelo separador nativo da plataforma (`\` no
     // Windows), entao um path com `/` (o drop, por exemplo, pode entregar
@@ -91,7 +94,7 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
     if (target == null) {
       setState(() {
         _status = _Status.error;
-        _error = 'Só dá para converter arquivos CSV, XLS ou XLSX.';
+        _error = l10n.errorUnsupportedFile(l10n.csvTypesLabel);
       });
       return;
     }
@@ -100,7 +103,9 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
     if (size > kMaxUploadBytes) {
       setState(() {
         _status = _Status.error;
-        _error = 'O arquivo tem ${formatBytes(size)} e o limite é de 25 MB.';
+        _error = l10n.errorFileTooBig(
+          formatBytes(size, locale: intlLocale(Localizations.localeOf(context))),
+        );
       });
       return;
     }
@@ -166,29 +171,32 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
         ),
       );
     } on ConverterException catch (e) {
+      if (!mounted) return;
+      final message = e.describe(AppLocalizations.of(context)!);
+
       await HistoryStore.instance.add(
         ConversionEntry(
           fileName: _fileName ?? file.name,
           at: DateTime.now(),
           status: ConversionStatus.error,
-          errorMessage: e.message,
+          errorMessage: message,
         ),
       );
 
       if (!mounted) return;
       setState(() {
         _status = _Status.error;
-        _error = e.message;
+        _error = message;
       });
     }
   }
 
-  String get _buttonLabel {
-    if (_status == _Status.converting) return 'Convertendo…';
+  String _buttonLabel(AppLocalizations l10n) {
+    if (_status == _Status.converting) return l10n.convertingLabel;
     return switch (_targetFormat) {
-      'xlsx' => 'Converter para Excel',
-      'csv' => 'Converter para CSV',
-      _ => 'Converter',
+      'xlsx' => l10n.convertToExcelButton,
+      'csv' => l10n.convertToCsvButton,
+      _ => l10n.convertGenericButton,
     };
   }
 
@@ -219,7 +227,7 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
     return Column(
       children: [
         ScreenHeader(
-          title: 'CSV e Excel',
+          title: AppLocalizations.of(context)!.toolCsvExcel,
           onBack: () => Navigator.of(context).maybePop(),
         ),
         Expanded(
@@ -243,6 +251,7 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
 
   Widget _desktopBody(bool canConvert) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(48, 40, 48, 40),
@@ -252,7 +261,7 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('CSV e Excel', style: AppText.h1.copyWith(color: c.text)),
+              Text(l10n.toolCsvExcel, style: AppText.h1.copyWith(color: c.text)),
               const SizedBox(height: 28),
               _dropzone(isDesktop: true),
               const SizedBox(height: 24),
@@ -263,7 +272,7 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
                 const SizedBox(height: 16),
               ],
               AppButton(
-                label: _buttonLabel,
+                label: _buttonLabel(l10n),
                 onPressed: canConvert ? _convert : null,
                 height: 46,
                 horizontalPadding: 28,
@@ -279,6 +288,7 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
 
   Widget _dropzone({required bool isDesktop}) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return DashedBox(
       onTap: _status == _Status.converting ? null : _pick,
@@ -294,8 +304,8 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
           SizedBox(height: isDesktop ? 14 : 12),
           Text(
             _supportsDrop && isDesktop
-                ? 'Arraste um CSV ou uma planilha, ou clique para selecionar'
-                : 'Toque para selecionar um CSV ou uma planilha',
+                ? l10n.dropzoneDragCsv
+                : l10n.dropzoneTapCsv,
             textAlign: TextAlign.center,
             style: AppText.h6.copyWith(
               fontSize: isDesktop ? 16 : 15,
@@ -304,7 +314,7 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            'CSV, XLS ou XLSX, até 25MB',
+            l10n.uploadHint(l10n.csvTypesLabel),
             style: (isDesktop ? AppText.bodySm : AppText.caption).copyWith(
               fontSize: isDesktop ? 13 : 12.5,
               color: c.neutral500,
@@ -319,21 +329,20 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
     final file = _file;
     if (file == null) return const [];
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return [
-      const Kicker('Arquivo selecionado', bottom: 10),
+      Kicker(l10n.selectedFileKicker, bottom: 10),
       FileCard(
         icon: LucideIcons.fileText,
         name: _fileName ?? file.name,
-        meta: formatBytes(_fileSize),
+        meta: formatBytes(_fileSize, locale: intlLocale(Localizations.localeOf(context))),
         onRemove: _status == _Status.converting ? null : _remove,
         padding: EdgeInsets.all(isDesktop ? 16 : 14),
       ),
       const SizedBox(height: 10),
       Text(
-        _targetFormat == 'xlsx'
-            ? 'Vai virar uma planilha (.xlsx).'
-            : 'Vai virar um arquivo CSV (.csv).',
+        _targetFormat == 'xlsx' ? l10n.willBecomeXlsx : l10n.willBecomeCsv,
         style: AppText.caption.copyWith(color: c.neutral500),
       ),
       SizedBox(height: isDesktop ? 28 : 24),
@@ -372,8 +381,7 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
     final origin = Uri.tryParse(_serverUrl)?.origin ?? _serverUrl;
 
     return Text(
-      'O arquivo é enviado para o seu servidor DiaKit ($origin) e apagado '
-      'assim que a conversão termina. Nada vai para serviços de terceiros.',
+      AppLocalizations.of(context)!.privacyNoteServerConversion(origin),
       style: AppText.caption.copyWith(color: c.neutral500),
     );
   }
@@ -401,7 +409,7 @@ class _CsvExcelScreenState extends State<CsvExcelScreen> {
             child: SafeArea(
               top: false,
               child: AppButton(
-                label: _buttonLabel,
+                label: _buttonLabel(AppLocalizations.of(context)!),
                 onPressed: canConvert ? _convert : null,
                 expand: true,
                 height: 48,

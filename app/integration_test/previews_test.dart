@@ -12,11 +12,13 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:diakit_app/l10n/generated/app_localizations.dart';
 import 'package:diakit_app/screens/app_shell.dart';
 import 'package:diakit_app/theme/app_theme.dart';
 
@@ -51,6 +53,14 @@ void main() {
             theme: brightness == Brightness.light
                 ? AppTheme.light
                 : AppTheme.dark,
+            locale: const Locale('pt'),
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
             home: const AppShell(),
           ),
         ),

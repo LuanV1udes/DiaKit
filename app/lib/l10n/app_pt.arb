@@ -1,0 +1,181 @@
+{
+  "@@locale": "pt",
+
+  "navHome": "Início",
+  "navHistory": "Histórico",
+  "navProfile": "Perfil",
+  "shareButton": "Compartilhar",
+  "convertingLabel": "Convertendo…",
+  "cancelButton": "Cancelar",
+  "saveButton": "Salvar",
+  "removeFileTooltip": "Remover arquivo",
+  "backTooltip": "Voltar",
+  "selectedFileKicker": "Arquivo selecionado",
+  "statusDone": "Concluído",
+  "statusError": "Erro",
+  "imageCount": "{count, plural, one{{count} imagem} other{{count} imagens}}",
+  "@imageCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "uploadHint": "{types}, até 25MB",
+  "@uploadHint": {
+    "placeholders": { "types": { "type": "String" } }
+  },
+  "errorUnsupportedFile": "Só dá para converter arquivos {types}.",
+  "@errorUnsupportedFile": {
+    "placeholders": { "types": { "type": "String" } }
+  },
+  "errorFileTooBig": "O arquivo tem {size} e o limite é de 25 MB.",
+  "@errorFileTooBig": {
+    "placeholders": { "size": { "type": "String" } }
+  },
+  "convertibleAppsLabel": "Word, Excel ou PowerPoint",
+  "convertibleExtensionsLabel": "DOC, DOCX, XLS, XLSX, PPT ou PPTX",
+  "csvTypesLabel": "CSV, XLS ou XLSX",
+  "conversionDoneTitle": "Conversão concluída",
+  "fileReadyTitle": "Seu arquivo está pronto!",
+  "convertAnotherFileButton": "Converter outro arquivo",
+  "comingSoonMessage": "Essa opção chega em uma próxima versão.",
+
+  "homeGreeting": "Olá",
+  "homeQuestion": "O que vamos fazer hoje?",
+  "homeToolsKicker": "Ferramentas",
+  "toolPdfToImage": "PDF → Imagem",
+  "toolCsvExcel": "CSV e Excel",
+  "toolPdfToWord": "PDF → Word",
+  "toolCompressPdf": "Comprimir PDF",
+  "toolSignPdf": "Assinar PDF",
+  "convertToPdfTitle": "Converter para PDF",
+  "convertToPdfDescription": "Transforme documentos do Word, Excel e PowerPoint em PDF prontos para impressão.",
+
+  "pickDocumentDialogTitle": "Selecione um documento Word, Excel ou PowerPoint",
+  "dropzoneDragDocument": "Arraste um arquivo ou clique para selecionar",
+  "dropzoneTapDocument": "Toque para selecionar um arquivo",
+  "privacyNoteServerPdf": "O arquivo é enviado para o seu servidor DiaKit ({origin}) e apagado assim que o PDF fica pronto. Nada vai para serviços de terceiros.",
+  "@privacyNoteServerPdf": {
+    "placeholders": { "origin": { "type": "String" } }
+  },
+
+  "pickCsvDialogTitle": "Selecione um CSV ou uma planilha",
+  "dropzoneDragCsv": "Arraste um CSV ou uma planilha, ou clique para selecionar",
+  "dropzoneTapCsv": "Toque para selecionar um CSV ou uma planilha",
+  "willBecomeXlsx": "Vai virar uma planilha (.xlsx).",
+  "willBecomeCsv": "Vai virar um arquivo CSV (.csv).",
+  "convertToExcelButton": "Converter para Excel",
+  "convertToCsvButton": "Converter para CSV",
+  "convertGenericButton": "Converter",
+  "privacyNoteServerConversion": "O arquivo é enviado para o seu servidor DiaKit ({origin}) e apagado assim que a conversão termina. Nada vai para serviços de terceiros.",
+  "@privacyNoteServerConversion": {
+    "placeholders": { "origin": { "type": "String" } }
+  },
+
+  "pickPdfDialogTitle": "Selecione um PDF",
+  "pdfToImageTitle": "PDF para Imagem",
+  "dropzoneDragPdf": "Arraste um PDF ou clique para selecionar",
+  "dropzoneTapPdf": "Toque para selecionar um PDF",
+  "privacyNoteLocalImages": "As imagens são geradas no seu aparelho. Nada é enviado a servidores externos.",
+  "pageProgress": "Página {done} de {total}…",
+  "@pageProgress": {
+    "placeholders": {
+      "done": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "convertToImageButton": "Converter para Imagem",
+
+  "errorCouldNotOpenFolder": "Não foi possível abrir a pasta: {message}",
+  "@errorCouldNotOpenFolder": {
+    "placeholders": { "message": { "type": "String" } }
+  },
+  "imagesReadyTitle": "Suas imagens estão prontas!",
+  "imagesReadySubtitle": "Uma imagem por página, prontas para compartilhar.",
+  "openFolderButton": "Abrir pasta",
+  "convertAnotherPdfButton": "Converter outro PDF",
+
+  "downloadPdfButton": "Baixar PDF",
+  "downloadExcelButton": "Baixar Excel",
+  "downloadCsvButton": "Baixar CSV",
+  "savedPdfMessage": "PDF salvo.",
+  "savedSpreadsheetMessage": "Planilha salva.",
+  "savedCsvMessage": "CSV salvo.",
+  "savePdfDialogTitle": "Salvar PDF",
+  "saveSpreadsheetDialogTitle": "Salvar planilha",
+  "saveCsvDialogTitle": "Salvar CSV",
+  "subtitlePdf": "Pronto para imprimir ou compartilhar.",
+  "subtitleSpreadsheet": "Pronta para abrir ou compartilhar.",
+  "subtitleCsv": "Pronto para importar ou compartilhar.",
+  "errorCouldNotSave": "Não foi possível salvar: {message}",
+  "@errorCouldNotSave": {
+    "placeholders": { "message": { "type": "String" } }
+  },
+
+  "splashDescription": "Ferramentas essenciais para o seu dia a dia, direto do bolso. Comece transformando seus documentos do Word, Excel e PowerPoint em PDF prontos para imprimir.",
+  "startButton": "Começar",
+
+  "profileTitle": "Perfil",
+  "preferencesKicker": "Preferências",
+  "appearanceLabel": "Aparência",
+  "themeSystem": "Sistema",
+  "themeLight": "Claro",
+  "themeDark": "Escuro",
+  "notificationsLabel": "Notificações",
+  "languageLabel": "Idioma",
+  "serverLabel": "Servidor de conversão",
+  "serverDialogDescription": "Endereço do serviço que converte os documentos. Por padrão, o backend do DiaKit rodando na própria máquina.",
+  "supportKicker": "Suporte",
+  "helpLabel": "Ajuda",
+  "sendFeedbackLabel": "Enviar feedback",
+  "aboutKicker": "Sobre",
+  "appVersionLabel": "DiaKit · versão {version}",
+  "@appVersionLabel": {
+    "placeholders": { "version": { "type": "String" } }
+  },
+  "freeAccountTag": "Conta gratuita",
+  "defaultUserName": "Usuário DiaKit",
+
+  "historyTitle": "Histórico",
+  "conversionFailedMessage": "A conversão falhou.",
+  "imagesNoLongerAvailable": "Essas imagens não estão mais no aparelho.",
+  "pdfNoLongerAvailable": "Esse PDF não está mais no aparelho.",
+  "historyMetaFailed": "{time} · falhou",
+  "@historyMetaFailed": {
+    "placeholders": { "time": { "type": "String" } }
+  },
+  "historyMetaSuccess": "{time} · {detail}",
+  "@historyMetaSuccess": {
+    "placeholders": {
+      "time": { "type": "String" },
+      "detail": { "type": "String" }
+    }
+  },
+  "emptyHistoryTitle": "Nenhuma conversão por aqui ainda.",
+  "emptyHistoryDescription": "Os arquivos que você converter aparecem nesta lista.",
+
+  "errorInvalidServerUrl": "Endereço do servidor inválido. Ajuste em Perfil › Servidor de conversão.",
+  "errorHttpFailure": "O servidor não conseguiu converter o arquivo (HTTP {status}).",
+  "@errorHttpFailure": {
+    "placeholders": { "status": { "type": "int" } }
+  },
+  "errorTimeout": "A conversão passou de {seconds} segundos e foi cancelada. Tente de novo ou use um arquivo menor.",
+  "@errorTimeout": {
+    "placeholders": { "seconds": { "type": "int" } }
+  },
+  "errorUnreachable": "Não foi possível falar com o servidor em {origin}. Verifique se ele está rodando e se o endereço está certo.",
+  "@errorUnreachable": {
+    "placeholders": { "origin": { "type": "String" } }
+  },
+  "errorTransport": "Falha ao enviar o arquivo para conversão: {error}",
+  "@errorTransport": {
+    "placeholders": { "error": { "type": "String" } }
+  },
+
+  "errorOpenPdfFailed": "Não foi possível abrir esse PDF. Ele pode estar corrompido ou protegido por senha.",
+  "errorPdfNoPages": "Esse PDF não tem nenhuma página.",
+  "errorRenderPageFailed": "Falha ao renderizar a página {page} de {total}.",
+  "@errorRenderPageFailed": {
+    "placeholders": {
+      "page": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  }
+}

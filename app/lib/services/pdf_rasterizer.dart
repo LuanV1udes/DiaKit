@@ -5,15 +5,39 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:pdfx/pdfx.dart';
 
-/// Falha ao rasterizar já traduzida para uma frase que pode ir direto para a
-/// tela (PDF corrompido, senha, sem páginas etc.).
+import '../l10n/generated/app_localizations.dart';
+
+enum _RasterizeErrorKind { openFailed, noPages, renderFailed }
+
+/// Falha ao rasterizar (PDF corrompido, senha, sem páginas etc.). Como em
+/// [ConverterException], a frase final só existe quando a tela chama
+/// [describe] com o [AppLocalizations] do idioma ativo.
 class RasterizeException implements Exception {
-  const RasterizeException(this.message);
+  const RasterizeException.openFailed()
+    : _kind = _RasterizeErrorKind.openFailed,
+      _page = null,
+      _total = null;
 
-  final String message;
+  const RasterizeException.noPages()
+    : _kind = _RasterizeErrorKind.noPages,
+      _page = null,
+      _total = null;
 
-  @override
-  String toString() => message;
+  const RasterizeException.renderFailed(int page, int total)
+    : _kind = _RasterizeErrorKind.renderFailed,
+      _page = page,
+      _total = total;
+
+  final _RasterizeErrorKind _kind;
+  final int? _page;
+  final int? _total;
+
+  String describe(AppLocalizations l10n) => switch (_kind) {
+    _RasterizeErrorKind.openFailed => l10n.errorOpenPdfFailed,
+    _RasterizeErrorKind.noPages => l10n.errorPdfNoPages,
+    _RasterizeErrorKind.renderFailed =>
+      l10n.errorRenderPageFailed(_page!, _total!),
+  };
 }
 
 /// Pasta com as imagens geradas e o que saiu nela.
@@ -53,15 +77,12 @@ class PdfRasterizer {
     try {
       document = await PdfDocument.openData(await file.readAsBytes());
     } catch (e) {
-      throw RasterizeException(
-        'Não foi possível abrir esse PDF. Ele pode estar corrompido ou '
-        'protegido por senha.',
-      );
+      throw const RasterizeException.openFailed();
     }
 
     try {
       if (document.pagesCount == 0) {
-        throw const RasterizeException('Esse PDF não tem nenhuma página.');
+        throw const RasterizeException.noPages();
       }
 
       final docsDir = await getApplicationDocumentsDirectory();
@@ -89,9 +110,7 @@ class PdfRasterizer {
             backgroundColor: '#FFFFFF',
           );
           if (rendered == null) {
-            throw RasterizeException(
-              'Falha ao renderizar a página $i de ${document.pagesCount}.',
-            );
+            throw RasterizeException.renderFailed(i, document.pagesCount);
           }
 
           final imageFile = File(

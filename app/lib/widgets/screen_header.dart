@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../theme/tokens.dart';
 
 /// Cabeçalho das telas empilhadas no mobile: seta de voltar + título.
@@ -55,7 +56,7 @@ class ScreenHeader extends StatelessWidget {
           IconButton(
             onPressed: onBack,
             icon: Icon(LucideIcons.arrowLeft, size: 20, color: c.text),
-            tooltip: 'Voltar',
+            tooltip: AppLocalizations.of(context)!.backTooltip,
           ),
           Expanded(
             child: Text(

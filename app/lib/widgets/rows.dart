@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../theme/tokens.dart';
 
 /// Card de arquivo: ícone, nome, tamanho e uma ação opcional à direita.
@@ -58,7 +59,7 @@ class FileCard extends StatelessWidget {
             IconButton(
               onPressed: onRemove,
               icon: Icon(LucideIcons.x, size: 16, color: c.neutral500),
-              tooltip: 'Remover arquivo',
+              tooltip: AppLocalizations.of(context)!.removeFileTooltip,
               padding: EdgeInsets.zero,
               constraints: const BoxConstraints.tightFor(width: 32, height: 32),
               visualDensity: VisualDensity.compact,

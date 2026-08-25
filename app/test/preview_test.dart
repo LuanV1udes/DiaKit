@@ -9,10 +9,12 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:diakit_app/l10n/generated/app_localizations.dart';
 import 'package:diakit_app/screens/app_shell.dart';
 import 'package:diakit_app/screens/convert_screen.dart';
 import 'package:diakit_app/screens/history_screen.dart';
@@ -55,6 +57,14 @@ Future<void> _shoot(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: brightness == Brightness.light ? AppTheme.light : AppTheme.dark,
+        locale: const Locale('pt'),
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
         home: child,
       ),
     ),

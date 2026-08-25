@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:open_filex/open_filex.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../models/conversion_entry.dart';
 import '../services/history_store.dart';
 import '../theme/layout.dart';
@@ -18,12 +19,14 @@ class HistoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
     final isDesktop = context.isDesktop;
+    final locale = intlLocale(Localizations.localeOf(context));
 
     return ListenableBuilder(
       listenable: HistoryStore.instance,
       builder: (context, _) {
-        final groups = _groupByDay(HistoryStore.instance.entries);
+        final groups = _groupByDay(HistoryStore.instance.entries, locale);
 
         return ListView(
           padding: isDesktop
@@ -31,7 +34,7 @@ class HistoryScreen extends StatelessWidget {
               : const EdgeInsets.fromLTRB(24, 24, 24, 12),
           children: [
             Text(
-              'Histórico',
+              l10n.historyTitle,
               style: (isDesktop ? AppText.h1Desktop : AppText.h2).copyWith(
                 color: c.text,
               ),
@@ -72,11 +75,11 @@ class _DayGroup {
   final List<ConversionEntry> entries;
 }
 
-List<_DayGroup> _groupByDay(List<ConversionEntry> entries) {
+List<_DayGroup> _groupByDay(List<ConversionEntry> entries, String locale) {
   final groups = <_DayGroup>[];
 
   for (final entry in entries) {
-    final label = dayLabel(entry.at);
+    final label = dayLabel(entry.at, locale: locale);
     if (groups.isEmpty || groups.last.label != label) {
       groups.add(_DayGroup(label));
     }
@@ -101,11 +104,12 @@ class _HistoryRow extends StatelessWidget {
 
   Future<void> _open(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     if (entry.status == ConversionStatus.error) {
       messenger.showSnackBar(
         SnackBar(
-          content: Text(entry.errorMessage ?? 'A conversão falhou.'),
+          content: Text(entry.errorMessage ?? l10n.conversionFailedMessage),
         ),
       );
       return;
@@ -113,8 +117,8 @@ class _HistoryRow extends StatelessWidget {
 
     final path = entry.outputPath;
     final missingMessage = entry.kind == ConversionKind.pdfToImages
-        ? 'Essas imagens não estão mais no aparelho.'
-        : 'Esse PDF não está mais no aparelho.';
+        ? l10n.imagesNoLongerAvailable
+        : l10n.pdfNoLongerAvailable;
     if (path == null ||
         !(entry.kind == ConversionKind.pdfToImages
             ? Directory(path).existsSync()
@@ -129,15 +133,17 @@ class _HistoryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
+    final locale = intlLocale(Localizations.localeOf(context));
     final failed = entry.status == ConversionStatus.error;
     final isImages = entry.kind == ConversionKind.pdfToImages;
 
     final successMeta = isImages
-        ? '${entry.pageCount ?? 0} ${entry.pageCount == 1 ? 'imagem' : 'imagens'}'
-        : formatBytes(entry.sizeBytes);
+        ? l10n.imageCount(entry.pageCount ?? 0)
+        : formatBytes(entry.sizeBytes, locale: locale);
     final meta = failed
-        ? '${formatTime(entry.at)} · falhou'
-        : '${formatTime(entry.at)} · $successMeta';
+        ? l10n.historyMetaFailed(formatTime(entry.at, locale: locale))
+        : l10n.historyMetaSuccess(formatTime(entry.at, locale: locale), successMeta);
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -187,7 +193,7 @@ class _HistoryRow extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               AppTag(
-                failed ? 'Erro' : 'Concluído',
+                failed ? l10n.statusError : l10n.statusDone,
                 variant: failed ? AppTagVariant.outline : AppTagVariant.accent,
               ),
             ],
@@ -205,6 +211,7 @@ class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 48),
@@ -213,12 +220,12 @@ class _EmptyState extends StatelessWidget {
           Icon(LucideIcons.history, size: 32, color: c.neutral500),
           const SizedBox(height: 14),
           Text(
-            'Nenhuma conversão por aqui ainda.',
+            l10n.emptyHistoryTitle,
             style: AppText.bodySmStrong.copyWith(color: c.text),
           ),
           const SizedBox(height: 4),
           Text(
-            'Os arquivos que você converter aparecem nesta lista.',
+            l10n.emptyHistoryDescription,
             textAlign: TextAlign.center,
             style: AppText.caption.copyWith(color: c.neutral500),
           ),

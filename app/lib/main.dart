@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
+import 'l10n/generated/app_localizations.dart';
 import 'screens/app_shell.dart';
 import 'screens/splash_screen.dart';
 import 'services/history_store.dart';
@@ -10,8 +11,10 @@ import 'theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Os rótulos de data do Histórico ("Hoje", "12 de agosto") vêm do intl.
+  // Os rótulos de data do Histórico ("Hoje", "12 de agosto") vêm do intl, para
+  // cada um dos idiomas que o app suporta.
   await initializeDateFormatting('pt_BR');
+  await initializeDateFormatting('en');
   runApp(const DiaKitApp());
 }
 
@@ -20,21 +23,30 @@ class DiaKitApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DiaKit',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      // As duas variantes do handoff acompanham a preferência do sistema.
-      themeMode: ThemeMode.system,
-      locale: const Locale('pt', 'BR'),
-      supportedLocales: const [Locale('pt', 'BR')],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      home: const _Bootstrap(),
+    // Tema e idioma podem ser fixados em Configurações > Perfil; os dois
+    // notifiers de `settings_store.dart` são a fonte da verdade de cada um --
+    // o app nunca segue o idioma do sistema, só o tema (via `ThemeMode.system`).
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeModeNotifier,
+      builder: (context, mode, _) => ValueListenableBuilder<Locale>(
+        valueListenable: localeNotifier,
+        builder: (context, locale, _) => MaterialApp(
+          title: 'DiaKit',
+          debugShowCheckedModeBanner: false,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: mode,
+          locale: locale,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localizationsDelegates: const [
+            AppLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          home: const _Bootstrap(),
+        ),
+      ),
     );
   }
 }
@@ -61,6 +73,8 @@ class _BootstrapState extends State<_Bootstrap> {
 
   Future<void> _load() async {
     final seen = await _settings.onboardingSeen();
+    themeModeNotifier.value = await _settings.themeMode();
+    localeNotifier.value = await _settings.locale();
     await HistoryStore.instance.load();
 
     if (!mounted) return;

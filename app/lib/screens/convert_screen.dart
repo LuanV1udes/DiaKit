@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:path/path.dart' as p;
 
+import '../l10n/generated/app_localizations.dart';
 import '../models/conversion_entry.dart';
 import '../services/converter_client.dart';
 import '../services/history_store.dart';
@@ -60,10 +61,11 @@ class _ConvertScreenState extends State<ConvertScreen> {
   }
 
   Future<void> _pick() async {
+    final l10n = AppLocalizations.of(context)!;
     final picked = await FilePicker.pickFile(
       type: FileType.custom,
       allowedExtensions: kConvertibleExtensions,
-      dialogTitle: 'Selecione um documento Word, Excel ou PowerPoint',
+      dialogTitle: l10n.pickDocumentDialogTitle,
     );
     if (picked == null) return;
     await _accept(picked.xFile);
@@ -71,6 +73,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
 
   /// Ponto único de entrada de arquivo: vale para o seletor e para o drop.
   Future<void> _accept(XFile file) async {
+    final l10n = AppLocalizations.of(context)!;
     // file.name pode vir com o caminho inteiro em vez de só o nome -- o
     // cross_file so separa pelo separador nativo da plataforma (`\` no
     // Windows), entao um path com `/` (o drop, por exemplo, pode entregar
@@ -81,7 +84,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
     if (!isSupported) {
       setState(() {
         _status = _ConvertStatus.error;
-        _error = 'Só dá para converter arquivos $kConvertibleExtensionsLabel.';
+        _error = l10n.errorUnsupportedFile(l10n.convertibleExtensionsLabel);
       });
       return;
     }
@@ -90,8 +93,9 @@ class _ConvertScreenState extends State<ConvertScreen> {
     if (size > kMaxUploadBytes) {
       setState(() {
         _status = _ConvertStatus.error;
-        _error =
-            'O arquivo tem ${formatBytes(size)} e o limite é de 25 MB.';
+        _error = l10n.errorFileTooBig(
+          formatBytes(size, locale: intlLocale(Localizations.localeOf(context))),
+        );
       });
       return;
     }
@@ -145,19 +149,22 @@ class _ConvertScreenState extends State<ConvertScreen> {
         MaterialPageRoute(builder: (_) => ResultScreen(output: output)),
       );
     } on ConverterException catch (e) {
+      if (!mounted) return;
+      final message = e.describe(AppLocalizations.of(context)!);
+
       await HistoryStore.instance.add(
         ConversionEntry(
           fileName: _fileName ?? file.name,
           at: DateTime.now(),
           status: ConversionStatus.error,
-          errorMessage: e.message,
+          errorMessage: message,
         ),
       );
 
       if (!mounted) return;
       setState(() {
         _status = _ConvertStatus.error;
-        _error = e.message;
+        _error = message;
       });
     }
   }
@@ -191,7 +198,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
     return Column(
       children: [
         ScreenHeader(
-          title: 'Converter para PDF',
+          title: AppLocalizations.of(context)!.convertToPdfTitle,
           onBack: () => Navigator.of(context).maybePop(),
         ),
         Expanded(
@@ -215,6 +222,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
 
   Widget _desktopBody(bool canConvert) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(48, 40, 48, 40),
@@ -225,7 +233,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Converter para PDF',
+                l10n.convertToPdfTitle,
                 style: AppText.h1.copyWith(color: c.text),
               ),
               const SizedBox(height: 28),
@@ -239,8 +247,8 @@ class _ConvertScreenState extends State<ConvertScreen> {
               ],
               AppButton(
                 label: _status == _ConvertStatus.converting
-                    ? 'Convertendo…'
-                    : 'Converter para PDF',
+                    ? l10n.convertingLabel
+                    : l10n.convertToPdfTitle,
                 onPressed: canConvert ? _convert : null,
                 height: 46,
                 horizontalPadding: 28,
@@ -256,6 +264,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
 
   Widget _dropzone({required bool isDesktop}) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return DashedBox(
       onTap: _status == _ConvertStatus.converting ? null : _pick,
@@ -275,8 +284,8 @@ class _ConvertScreenState extends State<ConvertScreen> {
           SizedBox(height: isDesktop ? 14 : 12),
           Text(
             _supportsDrop && isDesktop
-                ? 'Arraste um arquivo ou clique para selecionar'
-                : 'Toque para selecionar um arquivo',
+                ? l10n.dropzoneDragDocument
+                : l10n.dropzoneTapDocument,
             textAlign: TextAlign.center,
             style: AppText.h6.copyWith(
               fontSize: isDesktop ? 16 : 15,
@@ -285,7 +294,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
           ),
           const SizedBox(height: 4),
           Text(
-            '$kConvertibleAppsLabel, até 25MB',
+            l10n.uploadHint(l10n.convertibleAppsLabel),
             style: (isDesktop ? AppText.bodySm : AppText.caption).copyWith(
               fontSize: isDesktop ? 13 : 12.5,
               color: c.neutral500,
@@ -299,13 +308,14 @@ class _ConvertScreenState extends State<ConvertScreen> {
   List<Widget> _selectedFileSection({required bool isDesktop}) {
     final file = _file;
     if (file == null) return const [];
+    final l10n = AppLocalizations.of(context)!;
 
     return [
-      const Kicker('Arquivo selecionado', bottom: 10),
+      Kicker(l10n.selectedFileKicker, bottom: 10),
       FileCard(
         icon: LucideIcons.fileText,
         name: _fileName ?? file.name,
-        meta: formatBytes(_fileSize),
+        meta: formatBytes(_fileSize, locale: intlLocale(Localizations.localeOf(context))),
         onRemove: _status == _ConvertStatus.converting ? null : _remove,
         padding: EdgeInsets.all(isDesktop ? 16 : 14),
       ),
@@ -350,8 +360,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
     final origin = Uri.tryParse(_serverUrl)?.origin ?? _serverUrl;
 
     return Text(
-      'O arquivo é enviado para o seu servidor DiaKit ($origin) e apagado '
-      'assim que o PDF fica pronto. Nada vai para serviços de terceiros.',
+      AppLocalizations.of(context)!.privacyNoteServerPdf(origin),
       style: AppText.caption.copyWith(color: c.neutral500),
     );
   }
@@ -365,6 +374,7 @@ class _ConvertScreenState extends State<ConvertScreen> {
 
   Widget _mobileFooter(bool canConvert) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
       decoration: BoxDecoration(
@@ -380,8 +390,8 @@ class _ConvertScreenState extends State<ConvertScreen> {
               top: false,
               child: AppButton(
                 label: _status == _ConvertStatus.converting
-                    ? 'Convertendo…'
-                    : 'Converter para PDF',
+                    ? l10n.convertingLabel
+                    : l10n.convertToPdfTitle,
                 onPressed: canConvert ? _convert : null,
                 expand: true,
                 height: 48,

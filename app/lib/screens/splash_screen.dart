@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../theme/tokens.dart';
 import '../widgets/app_button.dart';
 
@@ -16,6 +17,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: SafeArea(
@@ -31,16 +33,14 @@ class SplashScreen extends StatelessWidget {
                   Text('DiaKit', style: AppText.display.copyWith(color: c.text)),
                   const SizedBox(height: 10),
                   Text(
-                    'Ferramentas essenciais para o seu dia a dia, direto do '
-                    'bolso. Comece transformando seus documentos do Word, '
-                    'Excel e PowerPoint em PDF prontos para imprimir.',
+                    l10n.splashDescription,
                     style: AppText.bodyLg.copyWith(color: c.neutral700),
                   ),
                   const SizedBox(height: 28),
                   const _PageDots(count: 3, active: 0),
                   const SizedBox(height: 24),
                   AppButton(
-                    label: 'Começar',
+                    label: l10n.startButton,
                     onPressed: onStart,
                     expand: true,
                     height: 48,

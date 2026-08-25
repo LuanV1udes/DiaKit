@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../theme/layout.dart';
 import '../theme/tokens.dart';
 import '../widgets/app_button.dart';
@@ -24,6 +25,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
     final isDesktop = context.isDesktop;
 
     return ListView(
@@ -38,10 +40,10 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Kicker('Olá'),
+                  Kicker(l10n.homeGreeting),
                   SizedBox(height: isDesktop ? 4 : 2),
                   Text(
-                    'O que vamos fazer hoje?',
+                    l10n.homeQuestion,
                     style: (isDesktop ? AppText.h1Desktop : AppText.h1)
                         .copyWith(color: c.text),
                   ),
@@ -52,7 +54,7 @@ class HomeScreen extends StatelessWidget {
             AppIconButton(
               icon: LucideIcons.user,
               onPressed: onOpenProfile,
-              tooltip: 'Perfil',
+              tooltip: l10n.navProfile,
             ),
           ],
         ),
@@ -62,16 +64,16 @@ class HomeScreen extends StatelessWidget {
           child: _ConverterCard(onTap: onOpenConverter, isDesktop: isDesktop),
         ),
         SizedBox(height: isDesktop ? 40 : 32),
-        Kicker('Ferramentas', bottom: isDesktop ? 16 : 14),
+        Kicker(l10n.homeToolsKicker, bottom: isDesktop ? 16 : 14),
         ContentWidth(
           maxWidth: isDesktop ? 900 : double.infinity,
           child: _UpcomingGrid(
             tools: [
-              _Tool(LucideIcons.image, 'PDF → Imagem', onTap: onOpenPdfToImages),
-              _Tool(LucideIcons.fileSpreadsheet, 'CSV e Excel', onTap: onOpenCsvExcel),
-              const _Tool(LucideIcons.fileSymlink, 'PDF → Word'),
-              const _Tool(LucideIcons.minimize2, 'Comprimir PDF'),
-              const _Tool(LucideIcons.signature, 'Assinar PDF'),
+              _Tool(LucideIcons.image, l10n.toolPdfToImage, onTap: onOpenPdfToImages),
+              _Tool(LucideIcons.fileSpreadsheet, l10n.toolCsvExcel, onTap: onOpenCsvExcel),
+              _Tool(LucideIcons.fileSymlink, l10n.toolPdfToWord),
+              _Tool(LucideIcons.minimize2, l10n.toolCompressPdf),
+              _Tool(LucideIcons.signature, l10n.toolSignPdf),
             ],
             columns: isDesktop ? 4 : 2,
             gap: isDesktop ? 16 : 14,
@@ -93,6 +95,7 @@ class _ConverterCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
     final chip = isDesktop ? 48.0 : 44.0;
 
     return OutlinedCard(
@@ -125,7 +128,7 @@ class _ConverterCard extends StatelessWidget {
           ),
           SizedBox(height: isDesktop ? 16 : 14),
           Text(
-            'Converter para PDF',
+            l10n.convertToPdfTitle,
             style: AppText.h5.copyWith(
               fontSize: isDesktop ? 20 : 19,
               color: c.text,
@@ -133,8 +136,7 @@ class _ConverterCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Transforme documentos do Word, Excel e PowerPoint em PDF '
-            'prontos para impressão.',
+            l10n.convertToPdfDescription,
             style: (isDesktop ? AppText.body : AppText.bodySm).copyWith(
               color: c.neutral700,
             ),

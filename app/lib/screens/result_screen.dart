@@ -4,6 +4,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../services/converter_client.dart';
 import '../theme/layout.dart';
 import '../theme/tokens.dart';
@@ -17,49 +18,45 @@ import 'convert_screen.dart';
 /// Tipo do arquivo de saída -- muda rótulos, mimetype e extensão do diálogo
 /// de salvar, mas não a estrutura da tela. [ResultScreen] usa
 /// [ResultFileKind.pdf] por padrão porque foi o primeiro conversor do app;
-/// CSV ↔ Excel usa [xlsx]/[csv].
+/// CSV ↔ Excel usa [xlsx]/[csv]. Os rótulos variam com o idioma, então vêm de
+/// métodos (que pedem um [AppLocalizations]) em vez de campos `const`.
 enum ResultFileKind {
-  pdf(
-    mimeType: 'application/pdf',
-    extensions: ['pdf'],
-    downloadLabel: 'Baixar PDF',
-    savedMessage: 'PDF salvo.',
-    saveDialogTitle: 'Salvar PDF',
-    subtitle: 'Pronto para imprimir ou compartilhar.',
-  ),
+  pdf(mimeType: 'application/pdf', extensions: ['pdf']),
   xlsx(
     mimeType:
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     extensions: ['xlsx'],
-    downloadLabel: 'Baixar Excel',
-    savedMessage: 'Planilha salva.',
-    saveDialogTitle: 'Salvar planilha',
-    subtitle: 'Pronta para abrir ou compartilhar.',
   ),
-  csv(
-    mimeType: 'text/csv',
-    extensions: ['csv'],
-    downloadLabel: 'Baixar CSV',
-    savedMessage: 'CSV salvo.',
-    saveDialogTitle: 'Salvar CSV',
-    subtitle: 'Pronto para importar ou compartilhar.',
-  );
+  csv(mimeType: 'text/csv', extensions: ['csv']);
 
-  const ResultFileKind({
-    required this.mimeType,
-    required this.extensions,
-    required this.downloadLabel,
-    required this.savedMessage,
-    required this.saveDialogTitle,
-    required this.subtitle,
-  });
+  const ResultFileKind({required this.mimeType, required this.extensions});
 
   final String mimeType;
   final List<String> extensions;
-  final String downloadLabel;
-  final String savedMessage;
-  final String saveDialogTitle;
-  final String subtitle;
+
+  String downloadLabel(AppLocalizations l10n) => switch (this) {
+    ResultFileKind.pdf => l10n.downloadPdfButton,
+    ResultFileKind.xlsx => l10n.downloadExcelButton,
+    ResultFileKind.csv => l10n.downloadCsvButton,
+  };
+
+  String savedMessage(AppLocalizations l10n) => switch (this) {
+    ResultFileKind.pdf => l10n.savedPdfMessage,
+    ResultFileKind.xlsx => l10n.savedSpreadsheetMessage,
+    ResultFileKind.csv => l10n.savedCsvMessage,
+  };
+
+  String saveDialogTitle(AppLocalizations l10n) => switch (this) {
+    ResultFileKind.pdf => l10n.savePdfDialogTitle,
+    ResultFileKind.xlsx => l10n.saveSpreadsheetDialogTitle,
+    ResultFileKind.csv => l10n.saveCsvDialogTitle,
+  };
+
+  String subtitle(AppLocalizations l10n) => switch (this) {
+    ResultFileKind.pdf => l10n.subtitlePdf,
+    ResultFileKind.xlsx => l10n.subtitleSpreadsheet,
+    ResultFileKind.csv => l10n.subtitleCsv,
+  };
 }
 
 /// Telas 04 (mobile) e 15 (desktop) — Conversão concluída.
@@ -69,7 +66,7 @@ class ResultScreen extends StatelessWidget {
     required this.output,
     this.kind = ResultFileKind.pdf,
     this.onConvertAnother,
-    this.convertAnotherLabel = 'Converter outro arquivo',
+    this.convertAnotherLabel,
   });
 
   final ConversionOutput output;
@@ -78,10 +75,14 @@ class ResultScreen extends StatelessWidget {
   /// Sem isso, volta para a tela de Converter (o único fluxo até o CSV ↔
   /// Excel existir). Outros fluxos passam a própria tela de origem aqui.
   final VoidCallback? onConvertAnother;
-  final String convertAnotherLabel;
+
+  /// `null` usa [AppLocalizations.convertAnotherFileButton] -- não dá para
+  /// resolver isso num valor `const` do construtor, que não tem `context`.
+  final String? convertAnotherLabel;
 
   Future<void> _download(BuildContext context) async {
     final messenger = ScaffoldMessenger.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     try {
       final bytes = await output.file.readAsBytes();
@@ -91,18 +92,18 @@ class ResultScreen extends StatelessWidget {
         mimeType: kind.mimeType,
         type: FileType.custom,
         allowedExtensions: kind.extensions,
-        dialogTitle: kind.saveDialogTitle,
+        dialogTitle: kind.saveDialogTitle(l10n),
       );
       if (saved == null) return; // usuário cancelou o diálogo
 
-      messenger.showSnackBar(SnackBar(content: Text(kind.savedMessage)));
+      messenger.showSnackBar(SnackBar(content: Text(kind.savedMessage(l10n))));
     } catch (_) {
       // Sem diálogo de salvar disponível: abre o arquivo para o usuário
       // decidir o que fazer com ele.
       final result = await OpenFilex.open(output.file.path);
       if (result.type != ResultType.done) {
         messenger.showSnackBar(
-          SnackBar(content: Text('Não foi possível salvar: ${result.message}')),
+          SnackBar(content: Text(l10n.errorCouldNotSave(result.message))),
         );
       }
     }
@@ -139,12 +140,13 @@ class ResultScreen extends StatelessWidget {
 
   Widget _mobile(BuildContext context) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ScreenHeader(
-          title: 'Conversão concluída',
+          title: l10n.conversionDoneTitle,
           onBack: () => Navigator.of(context).maybePop(),
           horizontalPadding: 28,
           top: 32,
@@ -164,19 +166,22 @@ class ResultScreen extends StatelessWidget {
                           const SuccessBadge(),
                           const SizedBox(height: 24),
                           Text(
-                            'Seu arquivo está pronto!',
+                            l10n.fileReadyTitle,
                             style: AppText.h3.copyWith(color: c.text),
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            kind.subtitle,
+                            kind.subtitle(l10n),
                             style: AppText.bodySm.copyWith(color: c.neutral700),
                           ),
                           const SizedBox(height: 28),
                           FileCard(
                             icon: LucideIcons.fileCheck2,
                             name: output.name,
-                            meta: formatBytes(output.sizeBytes),
+                            meta: formatBytes(
+                              output.sizeBytes,
+                              locale: intlLocale(Localizations.localeOf(context)),
+                            ),
                             padding: const EdgeInsets.symmetric(
                               horizontal: 18,
                               vertical: 14,
@@ -188,7 +193,7 @@ class ResultScreen extends StatelessWidget {
                   ),
                 ),
                 AppButton(
-                  label: kind.downloadLabel,
+                  label: kind.downloadLabel(l10n),
                   icon: LucideIcons.download,
                   onPressed: () => _download(context),
                   expand: true,
@@ -196,7 +201,7 @@ class ResultScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 AppButton(
-                  label: 'Compartilhar',
+                  label: l10n.shareButton,
                   icon: LucideIcons.share2,
                   variant: AppButtonVariant.secondary,
                   onPressed: _share,
@@ -207,7 +212,7 @@ class ResultScreen extends StatelessWidget {
                 const SizedBox(height: 4),
                 Align(
                   child: AppButton(
-                    label: convertAnotherLabel,
+                    label: convertAnotherLabel ?? l10n.convertAnotherFileButton,
                     variant: AppButtonVariant.ghost,
                     onPressed: () => _convertAnother(context),
                     height: 40,
@@ -224,6 +229,7 @@ class ResultScreen extends StatelessWidget {
 
   Widget _desktop(BuildContext context) {
     final c = context.c;
+    final l10n = AppLocalizations.of(context)!;
 
     return Center(
       child: SingleChildScrollView(
@@ -234,12 +240,12 @@ class ResultScreen extends StatelessWidget {
             const SuccessBadge(),
             const SizedBox(height: 24),
             Text(
-              'Seu arquivo está pronto!',
+              l10n.fileReadyTitle,
               style: AppText.h2.copyWith(color: c.text),
             ),
             const SizedBox(height: 8),
             Text(
-              kind.subtitle,
+              kind.subtitle(l10n),
               style: AppText.body.copyWith(color: c.neutral700),
             ),
             const SizedBox(height: 28),
@@ -248,7 +254,10 @@ class ResultScreen extends StatelessWidget {
               child: FileCard(
                 icon: LucideIcons.fileCheck2,
                 name: output.name,
-                meta: formatBytes(output.sizeBytes),
+                meta: formatBytes(
+                  output.sizeBytes,
+                  locale: intlLocale(Localizations.localeOf(context)),
+                ),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 16,
@@ -260,7 +269,7 @@ class ResultScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AppButton(
-                  label: kind.downloadLabel,
+                  label: kind.downloadLabel(l10n),
                   icon: LucideIcons.download,
                   onPressed: () => _download(context),
                   height: 44,
@@ -269,7 +278,7 @@ class ResultScreen extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 AppButton(
-                  label: 'Compartilhar',
+                  label: l10n.shareButton,
                   icon: LucideIcons.share2,
                   variant: AppButtonVariant.secondary,
                   onPressed: _share,

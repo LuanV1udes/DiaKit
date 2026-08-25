@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import '../l10n/generated/app_localizations.dart';
 import '../theme/layout.dart';
 import '../theme/tokens.dart';
 import '../widgets/brand_mark.dart';
@@ -12,16 +13,22 @@ import 'pdf_to_images_screen.dart';
 import 'profile_screen.dart';
 
 /// Destinos da navegação principal, na ordem em que aparecem na tab bar e na
-/// sidebar.
+/// sidebar. O rótulo depende do idioma ativo, então vem de [label] (que
+/// precisa de um [AppLocalizations]) em vez de um campo `const`.
 enum AppTab {
-  home(LucideIcons.house, 'Início'),
-  history(LucideIcons.history, 'Histórico'),
-  profile(LucideIcons.user, 'Perfil');
+  home(LucideIcons.house),
+  history(LucideIcons.history),
+  profile(LucideIcons.user);
 
-  const AppTab(this.icon, this.label);
+  const AppTab(this.icon);
 
   final IconData icon;
-  final String label;
+
+  String label(AppLocalizations l10n) => switch (this) {
+    AppTab.home => l10n.navHome,
+    AppTab.history => l10n.navHistory,
+    AppTab.profile => l10n.navProfile,
+  };
 }
 
 /// Casca de navegação do app.
@@ -221,7 +228,10 @@ class _BottomBarItem extends StatelessWidget {
           children: [
             Icon(tab.icon, size: 20, color: color),
             const SizedBox(height: 4),
-            Text(tab.label, style: AppText.navLabel.copyWith(color: color)),
+            Text(
+              tab.label(AppLocalizations.of(context)!),
+              style: AppText.navLabel.copyWith(color: color),
+            ),
           ],
         ),
       ),
@@ -297,7 +307,7 @@ class _SidebarItem extends StatelessWidget {
               Icon(tab.icon, size: 18, color: color),
               const SizedBox(width: 12),
               Text(
-                tab.label,
+                tab.label(AppLocalizations.of(context)!),
                 style: AppText.body.copyWith(
                   color: color,
                   fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,

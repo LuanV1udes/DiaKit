@@ -4,7 +4,10 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:diakit_app/utils/formatting.dart';
 
 void main() {
-  setUpAll(() => initializeDateFormatting('pt_BR'));
+  setUpAll(() async {
+    await initializeDateFormatting('pt_BR');
+    await initializeDateFormatting('en');
+  });
 
   group('formatBytes', () {
     test('usa KB e MB com vírgula decimal, como no mockup', () {
@@ -18,6 +21,10 @@ void main() {
 
     test('mantém bytes crus abaixo de 1 KB', () {
       expect(formatBytes(512), '512 B');
+    });
+
+    test('usa ponto decimal em inglês', () {
+      expect(formatBytes((1.4 * 1024 * 1024).round(), locale: 'en'), '1.4 MB');
     });
   });
 
@@ -37,9 +44,16 @@ void main() {
       expect(dayLabel(DateTime(2026, 7, 4), now: now), '4 de julho');
       expect(dayLabel(DateTime(2025, 12, 31), now: now), '31 de dezembro de 2025');
     });
+
+    test('traduz para inglês quando o idioma ativo é en', () {
+      expect(dayLabel(DateTime(2026, 8, 23, 9, 7), now: now, locale: 'en'), 'Today');
+      expect(dayLabel(DateTime(2026, 8, 22, 18, 51), now: now, locale: 'en'), 'Yesterday');
+      expect(dayLabel(DateTime(2026, 7, 4), now: now, locale: 'en'), 'July 4');
+    });
   });
 
   test('formatTime segue o relógio de 24h', () {
     expect(formatTime(DateTime(2026, 8, 23, 14, 32)), '14:32');
+    expect(formatTime(DateTime(2026, 8, 23, 14, 32), locale: 'en'), '14:32');
   });
 }

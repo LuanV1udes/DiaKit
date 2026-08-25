@@ -7,14 +7,72 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
-/// Falha de conversão já traduzida para uma frase que pode ir direto para a tela.
+import '../l10n/generated/app_localizations.dart';
+
+enum _ConverterErrorKind {
+  invalidServerUrl,
+  httpError,
+  serverMessage,
+  timeout,
+  unreachable,
+  transport,
+}
+
+/// Falha de conversão. Carrega só os dados do problema -- quem decide a
+/// frase final (e em que idioma) é [describe], chamado pela tela que pegou o
+/// `catch`, onde há um [AppLocalizations] disponível.
 class ConverterException implements Exception {
-  const ConverterException(this.message);
+  const ConverterException.invalidServerUrl()
+    : _kind = _ConverterErrorKind.invalidServerUrl,
+      _statusCode = null,
+      _seconds = null,
+      _text = null;
 
-  final String message;
+  const ConverterException.httpError(int statusCode)
+    : _kind = _ConverterErrorKind.httpError,
+      _statusCode = statusCode,
+      _seconds = null,
+      _text = null;
 
-  @override
-  String toString() => message;
+  /// Mensagem já pronta em `{ "error": "..." }` na resposta do backend -- não
+  /// dá para traduzir um texto que o próprio servidor escolheu.
+  const ConverterException.serverMessage(String message)
+    : _kind = _ConverterErrorKind.serverMessage,
+      _text = message,
+      _statusCode = null,
+      _seconds = null;
+
+  const ConverterException.timeout(int seconds)
+    : _kind = _ConverterErrorKind.timeout,
+      _seconds = seconds,
+      _statusCode = null,
+      _text = null;
+
+  const ConverterException.unreachable(String origin)
+    : _kind = _ConverterErrorKind.unreachable,
+      _text = origin,
+      _statusCode = null,
+      _seconds = null;
+
+  const ConverterException.transport(String error)
+    : _kind = _ConverterErrorKind.transport,
+      _text = error,
+      _statusCode = null,
+      _seconds = null;
+
+  final _ConverterErrorKind _kind;
+  final int? _statusCode;
+  final int? _seconds;
+  final String? _text;
+
+  String describe(AppLocalizations l10n) => switch (_kind) {
+    _ConverterErrorKind.invalidServerUrl => l10n.errorInvalidServerUrl,
+    _ConverterErrorKind.httpError => l10n.errorHttpFailure(_statusCode!),
+    _ConverterErrorKind.serverMessage => _text!,
+    _ConverterErrorKind.timeout => l10n.errorTimeout(_seconds!),
+    _ConverterErrorKind.unreachable => l10n.errorUnreachable(_text!),
+    _ConverterErrorKind.transport => l10n.errorTransport(_text!),
+  };
 }
 
 /// Arquivo pronto, gravado no diretório de documentos do app.
@@ -77,9 +135,7 @@ class ConverterClient {
   }) async {
     final uri = Uri.tryParse('${serverUrl.trim()}$endpoint');
     if (uri == null || !uri.hasScheme || uri.host.isEmpty) {
-      throw const ConverterException(
-        'Endereço do servidor inválido. Ajuste em Perfil › Servidor de conversão.',
-      );
+      throw const ConverterException.invalidServerUrl();
     }
 
     final http.Response response;
@@ -99,11 +155,11 @@ class ConverterClient {
         await request.send().timeout(_timeout),
       );
     } on Exception catch (e) {
-      throw ConverterException(_describeTransportFailure(e, uri));
+      throw _transportFailure(e, uri);
     }
 
     if (response.statusCode != 200) {
-      throw ConverterException(_describeServerError(response));
+      throw _serverError(response);
     }
 
     final outputDir = await getApplicationDocumentsDirectory();
@@ -133,26 +189,26 @@ class ConverterClient {
     return '$baseName ($attempt)';
   }
 
-  String _describeServerError(http.Response response) {
+  ConverterException _serverError(http.Response response) {
     // O backend responde `{ "error": "..." }` nos casos previstos.
     try {
       final body = jsonDecode(response.body);
-      if (body is Map && body['error'] is String) return body['error'] as String;
+      if (body is Map && body['error'] is String) {
+        return ConverterException.serverMessage(body['error'] as String);
+      }
     } catch (_) {
       // Resposta que não é JSON: cai no texto genérico abaixo.
     }
-    return 'O servidor não conseguiu converter o arquivo (HTTP ${response.statusCode}).';
+    return ConverterException.httpError(response.statusCode);
   }
 
-  String _describeTransportFailure(Exception e, Uri uri) {
+  ConverterException _transportFailure(Exception e, Uri uri) {
     if (e is TimeoutException) {
-      return 'A conversão passou de ${_timeout.inSeconds} segundos e foi '
-          'cancelada. Tente de novo ou use um arquivo menor.';
+      return ConverterException.timeout(_timeout.inSeconds);
     }
     if (e is SocketException || e is http.ClientException) {
-      return 'Não foi possível falar com o servidor em ${uri.origin}. '
-          'Verifique se ele está rodando e se o endereço está certo.';
+      return ConverterException.unreachable(uri.origin);
     }
-    return 'Falha ao enviar o arquivo para conversão: $e';
+    return ConverterException.transport(e.toString());
   }
 }

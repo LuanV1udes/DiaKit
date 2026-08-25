@@ -75,4 +75,28 @@ void main() {
 
     expect(find.text('Nenhuma conversão por aqui ainda.'), findsOneWidget);
   });
+
+  testWidgets('trocar o idioma para English relocaliza o app inteiro', (tester) async {
+    SharedPreferences.setMockInitialValues({'onboarding_seen': true});
+
+    await tester.pumpWidget(const DiaKitApp());
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Perfil'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Idioma'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('English'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Language'), findsOneWidget);
+    expect(find.text('Preferences'.toUpperCase()), findsOneWidget);
+
+    await tester.tap(find.text('Home'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('What shall we do today?'), findsOneWidget);
+  });
 }

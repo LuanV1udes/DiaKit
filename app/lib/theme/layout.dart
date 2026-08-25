@@ -20,14 +20,6 @@ const List<String> kConvertibleExtensions = [
   'ppt', 'pptx',
 ];
 
-/// [kConvertibleExtensions] em caixa alta, para a mensagem de erro quando o
-/// arquivo escolhido não é suportado.
-const String kConvertibleExtensionsLabel = 'DOC, DOCX, XLS, XLSX, PPT ou PPTX';
-
-/// Nomes dos apps de origem, para textos curtos como a legenda da dropzone
-/// ("Word, Excel ou PowerPoint, até 25MB").
-const String kConvertibleAppsLabel = 'Word, Excel ou PowerPoint';
-
 /// Versão exibida no Perfil. Precisa acompanhar `version:` do pubspec.yaml.
 const String kAppVersion = '1.0.0';
 

@@ -70,6 +70,9 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
+  # Gera AppLocalizations a partir de lib/l10n/*.arb (config em l10n.yaml).
+  generate: true
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
